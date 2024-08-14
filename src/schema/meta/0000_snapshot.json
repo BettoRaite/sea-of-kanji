@@ -1,0 +1,116 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.kanji_data": {
+      "name": "kanji_data",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "character": {
+          "name": "character",
+          "type": "varchar(1)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "meanings": {
+          "name": "meanings",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "kunyomi": {
+          "name": "kunyomi",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "onyomi": {
+          "name": "onyomi",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "freq": {
+          "name": "freq",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "grade": {
+          "name": "grade",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "jlpt": {
+          "name": "jlpt",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "strokes": {
+          "name": "strokes",
+          "type": "smallint[]",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "unique_character": {
+          "columns": [
+            "character"
+          ],
+          "nullsNotDistinct": false,
+          "name": "unique_character"
+        }
+      }
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {
+      "kanji_data": {
+        "columns": {
+          "meanings": {
+            "isArray": true,
+            "dimensions": 1,
+            "rawType": "text"
+          },
+          "kunyomi": {
+            "isArray": true,
+            "dimensions": 1,
+            "rawType": "text"
+          },
+          "onyomi": {
+            "isArray": true,
+            "dimensions": 1,
+            "rawType": "text"
+          },
+          "strokes": {
+            "isArray": true,
+            "dimensions": 1,
+            "rawType": "smallint"
+          }
+        }
+      }
+    }
+  }
+}
