@@ -18,6 +18,7 @@ export function useFetch(searchQuery: string) {
 
   useEffect(() => {
     if (typeof RAPID_API_KEY !== "string") {
+      console.error("NO RAPID API KEY");
       return;
     }
 
@@ -27,18 +28,18 @@ export function useFetch(searchQuery: string) {
     if (searchQuery) {
       fetchUrl = `${BASE_URL}/kanji/character/${searchQuery}`;
     }
-
     fetch(fetchUrl, FETCH_OPTIONS)
       .then((response) => {
+        console.log(response);
         return response.json();
       })
       .then((data) => {
-        // [[Function]]
         if (!Array.isArray(data.items)) {
           throw new TypeError("items is not an array");
         }
         const { items } = data;
         if (!ignore) {
+          console.log(items);
           setData(items);
           setIsLoading(false);
         }

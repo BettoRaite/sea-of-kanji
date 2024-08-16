@@ -1,4 +1,4 @@
-import { InsertKanji } from "../schema/schema";
+import type { InsertKanji } from "../schema/schema";
 
 export interface Kanji extends InsertKanji {
   saved?: boolean;

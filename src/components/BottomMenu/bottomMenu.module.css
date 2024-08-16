@@ -1,10 +1,22 @@
-.mainLayout {
+.layout {
   position: fixed;
   display: flex;
-  justify-content: space-between;
-  background-color: aqua;
-  bottom: 0;
+  justify-content: center;
+  bottom: 10px;
   left: 0;
   right: 0;
   z-index: 2;
+}
+.buttonsLayout {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 10px;
+  gap: 2rem;
+  background-color: var(--tea-green);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.button {
+  display: flex;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
 }

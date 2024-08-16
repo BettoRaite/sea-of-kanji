@@ -1,5 +1,5 @@
-import { Kanji } from "./types";
-import { SavedKanjiMap } from "./types";
+import type { Kanji } from "./types";
+import type { SavedKanjiMap } from "./types";
 
 export type KanjiData = {
   kanji: Kanji[];
@@ -12,8 +12,8 @@ const SAVED_KANJI_MAP_KEY = "SAVED_KANJI_MAP_KEY";
 export function loadSavedKanji(): KanjiData {
   try {
     const localStorage = window.localStorage;
-    const savedKanjiJSON = localStorage.getItem(SAVED_KANJI_KEY);
-    const savedKanjiMapJSON = localStorage.getItem(SAVED_KANJI_MAP_KEY);
+    const savedKanjiJSON = localStorage.getItem(SAVED_KANJI_KEY) ?? "[]";
+    const savedKanjiMapJSON = localStorage.getItem(SAVED_KANJI_MAP_KEY) ?? "{}";
 
     if (!savedKanjiJSON || !savedKanjiMapJSON) {
       throw new TypeError(

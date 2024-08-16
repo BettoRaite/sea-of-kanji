@@ -1,16 +1,14 @@
 import "./App.css";
 import { MainLayout } from "./components/MainLayout/MainLayout";
 import { loadSavedKanji } from "./utils/local-storage";
-import { SavedKanjiMap } from "./utils/types";
 
 function App() {
-  const savedKanji = loadSavedKanji();
-  const savedKanjiMap: SavedKanjiMap = {};
+  const { kanji, savedKanjiMap } = loadSavedKanji();
 
   return (
     <>
       <MainLayout
-        initialSavedKanji={savedKanji}
+        initialSavedKanji={kanji}
         initialSavedKanjiMap={savedKanjiMap}
       />
     </>

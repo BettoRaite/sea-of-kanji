@@ -1,6 +1,6 @@
 import { Card } from "../Card/Card";
 import styles from "./cardsList.module.css";
-import { Kanji } from "../../utils/types";
+import type { Kanji } from "../../utils/types";
 
 export type CardsListProps = {
   kanjiList: Kanji[];

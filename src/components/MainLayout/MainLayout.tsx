@@ -3,7 +3,9 @@ import { CardsList } from "../CardsList/CardsList";
 import { useFetch } from "../../utils/useFetch";
 import { SavedKanjiProvider } from "../SavedKanjiProvider/KanjiProvider";
 import { MainOverlay } from "../MainOverlay/MainOverlay";
-import { SavedKanjiProviderProps } from "../SavedKanjiProvider/KanjiProvider";
+import type { SavedKanjiProviderProps } from "../SavedKanjiProvider/KanjiProvider";
+import { SearchBar } from "../SearchBar/SearchBar";
+import styles from "./mainLayout.module.css";
 
 type MainLayoutProps = Pick<
   SavedKanjiProviderProps,
@@ -18,14 +20,8 @@ export function MainLayout({
   const { data, error, isLoading } = useFetch(searchQuery);
 
   return (
-    <>
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setSearchQuery(e.target.value);
-        }}
-      />
+    <main className={styles.mainLayout}>
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       <SavedKanjiProvider
         initialSavedKanji={initialSavedKanji}
@@ -34,6 +30,6 @@ export function MainLayout({
         {!error && !isLoading && <CardsList kanjiList={data ?? []} />}
         <MainOverlay />
       </SavedKanjiProvider>
-    </>
+    </main>
   );
 }
