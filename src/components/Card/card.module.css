@@ -1,12 +1,13 @@
 .card {
-  height: 25rem;
-  padding: 1rem;
-  background-color: white;
-
-  border-radius: 0.5rem;
-  border: 1px solid var(--cool-purple);
-
   position: relative;
+
+  width: 80%;
+  min-height: 25rem;
+
+  padding: 1rem;
+  background-color: var(--light-gray);
+  border-radius: 1rem;
+
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
@@ -23,10 +24,17 @@
 }
 .sectionHeader {
   text-align: start;
+  display: flex;
   background-color: var(--cool-purple);
   color: white;
   border-radius: 10px;
   padding: 0.5rem;
+}
+.sectionHeader img {
+  transition: all 0.3s;
+}
+.sectionHeaderExpanded img {
+  transform: rotate(180deg);
 }
 .toggleButton {
   padding: 0;
@@ -40,6 +48,7 @@
 .kanji {
   color: var(--cool-purple);
   border: 2px solid var(--cool-purple);
+  background-color: var(--soft-white);
   border-radius: 10px;
   font-size: 3rem;
   padding: 2rem;
@@ -99,24 +108,52 @@
 }
 
 .button {
-  z-index: -1;
-  position: absolute;
-  right: 0;
-}
+  --size: 3.6rem;
+  height: var(--size);
+  width: var(--size);
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  z-index: 1;
+  top: -0.5rem;
+  right: -0.5rem;
+
+  background-color: var(--pacific-cyan);
+  border-radius: 40%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+.button img {
+  transition: 0.2s filter;
+}
+.button:hover img {
+  filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(5613%)
+    hue-rotate(240deg) brightness(84%) contrast(92%);
+}
 .buttonSaved {
-  background-color: red;
+  background-color: var(--light-gray);
+  border-radius: 30%;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  --size: 4rem;
+}
+.buttonSaved img {
+  filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(5613%)
+    hue-rotate(240deg) brightness(84%) contrast(92%);
 }
 
 .characterMeaningLayout {
   display: flex;
 }
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .card {
-    height: 30rem;
-    padding: 2rem;
+    justify-self: center;
+    width: 90%;
+    height: 40rem;
   }
   .kanji {
-    font-size: 5rem;
+    font-size: 3rem;
   }
 }

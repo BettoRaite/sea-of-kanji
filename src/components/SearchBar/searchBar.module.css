@@ -1,7 +1,28 @@
+.layout {
+  display: flex;
+  gap: 1rem;
+  background-color: var(--soft-white);
+  border: 1px solid var(--pale-gray);
+  border-radius: 2px;
+}
 .searchBar {
   outline: none;
   border-radius: 10px;
-  border: 1px solid black;
-  font-size: 1rem;
+  border: none;
+  font-size: 0.9rem;
   padding: 0.5rem;
+}
+.searchBar::placeholder {
+  font-size: 1rem;
+}
+.searchButton {
+  --size: 3rem;
+  height: var(--size);
+  width: var(--size);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 0;
 }

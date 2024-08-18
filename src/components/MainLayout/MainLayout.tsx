@@ -6,6 +6,7 @@ import { MainOverlay } from "../MainOverlay/MainOverlay";
 import type { SavedKanjiProviderProps } from "../SavedKanjiProvider/KanjiProvider";
 import { SearchBar } from "../SearchBar/SearchBar";
 import styles from "./mainLayout.module.css";
+// import { CardSceleton } from "../CardSceleton/CardSceleton";
 
 type MainLayoutProps = Pick<
   SavedKanjiProviderProps,

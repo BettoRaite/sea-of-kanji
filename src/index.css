@@ -4,7 +4,6 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  background-color: #242424;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -17,22 +16,29 @@
   --emerald: hsla(154, 53%, 57%, 1);
   --light-green: hsla(134, 75%, 72%, 1);
   --tea-green: hsla(126, 81%, 88%, 1);
-  --cool-purple: hsla(240, 60%, 50%, 0.95);
+  --cool-purple: rgba(51, 51, 204, 0.949);
 
   --deep-blue: hsla(210, 70%, 40%, 1);
   --deep-blue-light: hsla(210, 70%, 40%, 0.8);
   --teal: hsla(180, 60%, 40%, 1);
   --light-mint: hsla(160, 70%, 80%, 1);
   --soft-yellow: hsla(60, 100%, 75%, 1);
-  --coral: hsla(15, 100%, 65%, 1);
+  --coral: #ff794d;
   --lavender: hsla(240, 60%, 80%, 1);
-  --pale-gray: hsla(0, 0%, 90%, 1);
+  --pale-gray: #e6e6e6;
 
   --federal-blue: #03045eff;
   --honolulu-blue: #0077b6ff;
   --pacific-cyan: #00b4d8ff;
   --non-photo-blue: #90e0efff;
   --light-cyan: #caf0f8ff;
+
+  --soft-blue: #a4c8e1;
+  --pale-green: #b7e4d9;
+  --lavender: #e1c6e1;
+  --light-gray: #f0f4f8;
+  --cream: #fff5e1;
+  --soft-white: #ffffff;
 }
 
 a {
@@ -43,13 +49,11 @@ a {
 a:hover {
   color: #535bf2;
 }
-
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
+  padding: 0;
+  background-color: #ffffff;
   min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
@@ -77,10 +81,6 @@ button:focus-visible {
 }
 
 @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
   a:hover {
     color: #747bff;
   }

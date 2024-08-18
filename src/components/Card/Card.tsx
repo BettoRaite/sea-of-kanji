@@ -1,6 +1,6 @@
 import styles from "./card.module.css";
 import { useSavedKanjiHandler } from "../SavedKanjiProvider/KanjiProvider";
-import favoriteIcon from "/favorite-icon.svg";
+import favoriteIcon from "/icons/favorite-filled.svg";
 import type { Kanji } from "../../utils/types";
 import { useSavedKanjiContext } from "../SavedKanjiProvider/KanjiProvider";
 import chevronUpIcon from "/icons/chevron-up.svg";
@@ -44,6 +44,7 @@ export function Card({ kanji }: CardProps) {
           <img src={favoriteIcon} alt="save kanji" />
         </button>
       )}
+
       {kanji.saved && (
         <button className={styles.button} type="button" onClick={handleForget}>
           <img src={""} alt="forget kanji" />
@@ -77,10 +78,13 @@ export function Card({ kanji }: CardProps) {
         </section>
       </div>
 
-      {/* {kanji.meanings.map((meaning, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-        <p key={i}>{meaning}</p>
-      ))} */}
+      <section className={styles.readingsLayout}>
+        <span className={styles.readingHint}>Meanings</span>
+        {kanji.meanings.map((meaning, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+          <p key={i}>{meaning}</p>
+        ))}
+      </section>
 
       <section className={styles.sectionLayout}>
         <button
@@ -88,7 +92,11 @@ export function Card({ kanji }: CardProps) {
           type="button"
           onClick={() => handleExpandContent("words")}
         >
-          <h4 className={styles.sectionHeader}>
+          <h4
+            className={`${styles.sectionHeader} ${
+              expandedContent === "words" && styles.sectionHeaderExpanded
+            }`}
+          >
             <img src={chevronUpIcon} alt="expand section" />
             Words
           </h4>
@@ -109,7 +117,11 @@ export function Card({ kanji }: CardProps) {
           type="button"
           onClick={() => handleExpandContent("miscs")}
         >
-          <h4 className={styles.sectionHeader}>
+          <h4
+            className={`${styles.sectionHeader} ${
+              expandedContent === "miscs" && styles.sectionHeaderExpanded
+            }`}
+          >
             <img src={chevronUpIcon} alt="expand section" />
             Miscs
           </h4>

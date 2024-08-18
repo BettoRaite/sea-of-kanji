@@ -1,0 +1,14 @@
+.header {
+  display: flex;
+}
+.nav {
+  display: flex;
+}
+.navLinks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.navLinksItem {
+  list-style: none;
+}

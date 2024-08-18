@@ -1,7 +1,18 @@
 .cardsLayout {
-  margin-top: 2rem;
+  margin-top: 5rem;
   display: flex;
+  align-items: center;
   flex-direction: column;
   gap: 4rem;
   width: 100%;
+}
+@media (min-width: 1280px) {
+  .cardsLayout {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    width: 90%;
+  }
 }

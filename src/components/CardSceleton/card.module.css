@@ -1,0 +1,13 @@
+.card {
+  min-height: 25rem;
+  /* padding: 1rem; */
+
+  background-color: var(--light-gray);
+  border-radius: 1rem;
+
+  position: relative;
+  /* overflow-y: scroll; */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}

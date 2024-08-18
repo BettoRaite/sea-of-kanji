@@ -9,6 +9,7 @@ export function CardsList({ kanjiList }: CardsListProps) {
   return (
     <div className={styles.cardsLayout}>
       {kanjiList.map((kanji) => {
+        console.log(kanji.id);
         return <Card key={kanji.id} kanji={kanji} />;
       })}
     </div>

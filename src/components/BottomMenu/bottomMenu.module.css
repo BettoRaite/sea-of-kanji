@@ -13,7 +13,8 @@
   padding: 1rem;
   border-radius: 10px;
   gap: 2rem;
-  background-color: var(--tea-green);
+  background-color: var(--soft-blue);
+  border: 1px solid gainsboro;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 .button {
