@@ -62,7 +62,9 @@ body {
   background-color: #ffffff;
   min-width: 320px;
 }
-
+* {
+  color: var(--light-gray);
+}
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
