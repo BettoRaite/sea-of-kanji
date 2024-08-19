@@ -6,7 +6,9 @@ import { MainOverlay } from "../MainOverlay/MainOverlay";
 import type { SavedKanjiProviderProps } from "../SavedKanjiProvider/KanjiProvider";
 import { SearchBar } from "../SearchBar/SearchBar";
 import styles from "./mainLayout.module.css";
+import { NotFound } from "../NotFound/NotFound";
 // import { CardSceleton } from "../CardSceleton/CardSceleton";
+import { CardsListSceleton } from "../CardsListSceleton/CardsListSceleton";
 
 type MainLayoutProps = Pick<
   SavedKanjiProviderProps,
@@ -19,16 +21,19 @@ export function MainLayout({
 }: MainLayoutProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const { data, error, isLoading } = useFetch(searchQuery);
-
   return (
     <main className={styles.mainLayout}>
-      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <SearchBar
+        onSearch={(searchQuery: string) => setSearchQuery(searchQuery)}
+      />
 
       <SavedKanjiProvider
         initialSavedKanji={initialSavedKanji}
         initialSavedKanjiMap={initialSavedKanjiMap}
       >
+        {isLoading && <CardsListSceleton />}
         {!error && !isLoading && <CardsList kanjiList={data ?? []} />}
+        {!isLoading && !error && !data && <NotFound />}
         <MainOverlay />
       </SavedKanjiProvider>
     </main>

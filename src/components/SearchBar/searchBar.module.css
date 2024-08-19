@@ -1,16 +1,20 @@
 .layout {
-  display: flex;
+  min-width: 280px;
+  width: 300px;
+  max-width: 500px;
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 1rem;
   background-color: var(--soft-white);
   border: 1px solid var(--pale-gray);
-  border-radius: 2px;
+  border-radius: 0.5rem;
 }
 .searchBar {
   outline: none;
   border-radius: 10px;
   border: none;
   font-size: 0.9rem;
-  padding: 0.5rem;
+  padding: 0.7rem;
 }
 .searchBar::placeholder {
   font-size: 1rem;

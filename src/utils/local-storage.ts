@@ -1,44 +1,26 @@
-import type { Kanji } from "./types";
-import type { SavedKanjiMap } from "./types";
-
-export type KanjiData = {
-  kanji: Kanji[];
-  savedKanjiMap: SavedKanjiMap;
-};
+import type { KanjiItem } from "./types";
 
 const SAVED_KANJI_KEY = "SAVED_KANJI_KEY";
-const SAVED_KANJI_MAP_KEY = "SAVED_KANJI_MAP_KEY";
 
-export function loadSavedKanji(): KanjiData {
+export function loadSavedKanji(): KanjiItem[] {
   try {
     const localStorage = window.localStorage;
     const savedKanjiJSON = localStorage.getItem(SAVED_KANJI_KEY) ?? "[]";
-    const savedKanjiMapJSON = localStorage.getItem(SAVED_KANJI_MAP_KEY) ?? "{}";
 
-    if (!savedKanjiJSON || !savedKanjiMapJSON) {
-      throw new TypeError(
-        `savedKanjiJSON value: ${savedKanjiJSON}\nsavedKanjiMapJSON value: ${savedKanjiMapJSON} must not be null.`
-      );
+    if (!savedKanjiJSON) {
+      throw new TypeError("No saved kanji data.");
     }
-
-    return {
-      kanji: JSON.parse(savedKanjiJSON),
-      savedKanjiMap: JSON.parse(savedKanjiMapJSON),
-    };
+    return JSON.parse(savedKanjiJSON);
   } catch (error) {
     console.error("Failed to load kanji data:", error);
-    return {
-      kanji: [],
-      savedKanjiMap: {},
-    };
+    return [];
   }
 }
 
-export function saveKanjiData({ kanji, savedKanjiMap }: KanjiData) {
+export function saveKanjiData(kanji: KanjiItem[]) {
   try {
     const localStorage = window.localStorage;
     localStorage.setItem(SAVED_KANJI_KEY, JSON.stringify(kanji));
-    localStorage.setItem(SAVED_KANJI_MAP_KEY, JSON.stringify(savedKanjiMap));
   } catch (error) {
     console.error("Failed to save kanji data:", error);
   }

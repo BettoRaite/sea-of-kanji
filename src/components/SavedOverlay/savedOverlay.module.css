@@ -1,11 +1,21 @@
 .mainLayout {
-  background-color: gainsboro;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  --padding-sides: 1rem;
+  padding-left: var(--padding-sides);
+  padding-right: var(--padding-sides);
+
+  background-color: var(--soft-white);
+
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+
   transition: all 0.3s;
   overflow-y: scroll;
 }

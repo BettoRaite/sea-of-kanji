@@ -1,8 +1,8 @@
 import styles from "./card.module.css";
-import type { Kanji } from "../../utils/types";
+import type { KanjiItem } from "../../utils/types";
 
 export type CardProps = {
-  kanji: Kanji;
+  kanji: KanjiItem;
 };
 
 export function CardSceleton() {

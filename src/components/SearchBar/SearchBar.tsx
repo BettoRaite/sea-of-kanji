@@ -1,14 +1,19 @@
 import type { ChangeEvent } from "react";
 import styles from "./searchBar.module.css";
 import searchIcon from "/icons/search.svg";
+import { useState } from "react";
+
 type SearchBarProps = {
-  searchQuery: string;
-  setSearchQuery: (searchQuery: string) => void;
+  onSearch: (searchQuery: string) => void;
 };
 
-export function SearchBar({ searchQuery, setSearchQuery }: SearchBarProps) {
+export function SearchBar({ onSearch }: SearchBarProps) {
+  const [input, setInput] = useState("");
   function handlerChange(e: ChangeEvent<HTMLInputElement>) {
-    setSearchQuery(e.target.value);
+    setInput(e.target.value);
+  }
+  function handleClick() {
+    onSearch(input);
   }
   return (
     <div className={styles.layout}>
@@ -17,11 +22,15 @@ export function SearchBar({ searchQuery, setSearchQuery }: SearchBarProps) {
         id="search-bar"
         type="text"
         aria-label="Search kanji"
-        value={searchQuery}
+        value={input}
         onChange={handlerChange}
         placeholder="Type any kanji character"
       />
-      <button className={styles.searchButton} type="button">
+      <button
+        className={styles.searchButton}
+        type="button"
+        onClick={handleClick}
+      >
         <img src={searchIcon} alt="Search kanji" />
       </button>
     </div>

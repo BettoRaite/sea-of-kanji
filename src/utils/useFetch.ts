@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { NotFoundError } from "./error";
 
 const RAPID_API_KEY = import.meta.env.VITE_RAPID_API_KEY;
 const BASE_URL = "https://kanjibreakapi.p.rapidapi.com";
@@ -14,7 +15,7 @@ const FETCH_OPTIONS = {
 export function useFetch(searchQuery: string) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (typeof RAPID_API_KEY !== "string") {
@@ -26,27 +27,40 @@ export function useFetch(searchQuery: string) {
     let fetchUrl = DEFAULT_FETCH_URL;
 
     if (searchQuery) {
+      console.log(searchQuery);
       fetchUrl = `${BASE_URL}/kanji/character/${searchQuery}`;
     }
-    fetch(fetchUrl, FETCH_OPTIONS)
-      .then((response) => {
-        console.log(response);
-        return response.json();
-      })
-      .then((data) => {
-        if (!Array.isArray(data.items)) {
-          throw new TypeError("items is not an array");
+
+    async function initReq() {
+      try {
+        const response = await fetch(fetchUrl, FETCH_OPTIONS);
+        if (response.status === 400) {
+          throw new NotFoundError("Not found.");
         }
+        const data = await response.json();
+        if (!Array.isArray(data.items)) {
+          throw new NotFoundError("Not found.");
+        }
+
         const { items } = data;
+
         if (!ignore) {
-          console.log(items);
           setData(items);
           setIsLoading(false);
         }
-      })
-      .catch((error) => {
-        setError(error);
-      });
+      } catch (error) {
+        if (error instanceof NotFoundError) {
+          setData(null);
+          setIsLoading(false);
+        } else {
+          console.error(`Failed to fetch data:\n${error}`);
+          setError(true);
+          setIsLoading(false);
+        }
+      }
+    }
+
+    initReq();
 
     return () => {
       ignore = true;

@@ -1,17 +1,20 @@
 .card {
+  align-self: center;
   position: relative;
 
-  width: 80%;
+  width: 90%;
   min-height: 25rem;
 
   padding: 1rem;
-  background-color: var(--light-gray);
+  background-color: var(--pale-moon);
   border-radius: 1rem;
 
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .card * {
   margin: 0;
@@ -90,6 +93,9 @@
   display: grid;
 }
 .contentWrapper {
+  background-color: var(--soft-white);
+  margin-top: 1rem;
+  border-radius: 1rem;
   padding: 0.5rem;
   overflow: hidden;
   opacity: 0;
@@ -99,7 +105,17 @@
 .contentWrapperExpanded {
   overflow-y: scroll;
   opacity: 1;
-  height: 10rem;
+  height: 15rem;
+}
+.contentWrapperEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.contentWrapperEmpty::before {
+  content: "Empty";
+  color: var(--light-gray);
+  font-size: 2rem;
 }
 .contentField {
   color: black;
@@ -134,10 +150,11 @@
     hue-rotate(240deg) brightness(84%) contrast(92%);
 }
 .buttonSaved {
-  background-color: var(--light-gray);
+  background-color: transparent;
   border-radius: 30%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   --size: 4rem;
+  background-color: aliceblue;
 }
 .buttonSaved img {
   filter: brightness(0) saturate(100%) invert(17%) sepia(56%) saturate(5613%)
@@ -147,11 +164,22 @@
 .characterMeaningLayout {
   display: flex;
 }
+@media (min-width: 768px) {
+  .card {
+    justify-self: center;
+    width: 90%;
+    height: min-content;
+  }
+  .kanji {
+    font-size: 2rem;
+  }
+}
+
 @media (min-width: 1280px) {
   .card {
     justify-self: center;
     width: 90%;
-    height: 40rem;
+    height: max-content;
   }
   .kanji {
     font-size: 3rem;

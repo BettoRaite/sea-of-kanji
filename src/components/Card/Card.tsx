@@ -1,29 +1,44 @@
 import styles from "./card.module.css";
 import { useSavedKanjiHandler } from "../SavedKanjiProvider/KanjiProvider";
 import favoriteIcon from "/icons/favorite-filled.svg";
-import type { Kanji } from "../../utils/types";
+import type { KanjiItem } from "../../utils/types";
 import { useSavedKanjiContext } from "../SavedKanjiProvider/KanjiProvider";
 import chevronUpIcon from "/icons/chevron-up.svg";
 import { useState } from "react";
 
 export type CardProps = {
-  kanji: Kanji;
+  kanjiItem: KanjiItem;
 };
 
 type ContentType = "words" | "miscs" | "";
-export function Card({ kanji }: CardProps) {
+
+function extractKanjiItemWords(kanjiItem: KanjiItem): string[] {
+  const words = kanjiItem.words;
+  const wordMeaning = [];
+
+  for (const word of words) {
+    for (const kanji of word.kanji) {
+      if (kanji.includes(kanjiItem.character)) {
+        wordMeaning.push(`${kanji} - ${word.meanings}`);
+      }
+      break;
+    }
+  }
+
+  return wordMeaning;
+}
+export function Card({ kanjiItem }: CardProps) {
   const [expandedContent, setExpandedContent] = useState<ContentType>("");
 
   const kanjiHandler = useSavedKanjiHandler();
   const { savedKanjiMap = {} } = useSavedKanjiContext();
-
   function handleSave() {
-    kanjiHandler.save(kanji);
+    kanjiHandler.save(kanjiItem);
   }
 
   function handleForget() {
-    if (typeof kanji.id === "number") {
-      kanjiHandler.forget(kanji.id);
+    if (typeof kanjiItem.id === "number") {
+      kanjiHandler.forget(kanjiItem.id);
     }
   }
 
@@ -31,21 +46,21 @@ export function Card({ kanji }: CardProps) {
     setExpandedContent(contentType === expandedContent ? "" : contentType);
   }
 
-  const isSaved = savedKanjiMap[kanji.id ?? ""];
-
+  const isSaved = savedKanjiMap[kanjiItem.id ?? ""];
+  const kanjiWords = extractKanjiItemWords(kanjiItem);
   return (
     <div className={styles.card}>
-      {!kanji.saved && (
+      {!kanjiItem.saved && (
         <button
           className={`${styles.button} ${isSaved && styles.buttonSaved}`}
           type="button"
-          onClick={handleSave}
+          onClick={isSaved ? handleForget : handleSave}
         >
           <img src={favoriteIcon} alt="save kanji" />
         </button>
       )}
 
-      {kanji.saved && (
+      {kanjiItem.saved && (
         <button className={styles.button} type="button" onClick={handleForget}>
           <img src={""} alt="forget kanji" />
         </button>
@@ -53,7 +68,7 @@ export function Card({ kanji }: CardProps) {
 
       <div className={styles.topLayout}>
         {/* <p>{kanji.jlpt}</p> */}
-        <p className={styles.kanji}>{kanji.character}</p>
+        <p className={styles.kanji}>{kanjiItem.character}</p>
         <section className={styles.readingsLayout}>
           <h4
             className={styles.sectionHeader}
@@ -63,24 +78,24 @@ export function Card({ kanji }: CardProps) {
           >
             Readings
           </h4>
-          {kanji.kunyomi && (
+          {kanjiItem.kunyomi && (
             <div>
               <span className={styles.readingHint}>Kun</span>
-              <p className={styles.reading}>{kanji.kunyomi}</p>
+              <p className={styles.reading}>{kanjiItem.kunyomi}</p>
             </div>
           )}
-          {kanji.onyomi && (
+          {kanjiItem.onyomi && (
             <div>
               <span className={styles.readingHint}>On</span>
-              <p className={styles.reading}>{kanji.onyomi}</p>
+              <p className={styles.reading}>{kanjiItem.onyomi}</p>
             </div>
           )}
         </section>
       </div>
 
-      <section className={styles.readingsLayout}>
+      <section className={styles.sectionLayout}>
         <span className={styles.readingHint}>Meanings</span>
-        {kanji.meanings.map((meaning, i) => (
+        {kanjiItem.meanings.map((meaning, i) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           <p key={i}>{meaning}</p>
         ))}
@@ -105,9 +120,12 @@ export function Card({ kanji }: CardProps) {
         <div
           className={`${styles.contentWrapper} ${
             expandedContent === "words" && styles.contentWrapperExpanded
-          }`}
+          } ${kanjiWords.length === 0 && styles.contentWrapperEmpty}`}
         >
-          Words
+          {kanjiWords.map((w, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            <p key={i}>{w}</p>
+          ))}
         </div>
       </section>
 
@@ -132,14 +150,14 @@ export function Card({ kanji }: CardProps) {
             expandedContent === "miscs" && styles.contentWrapperExpanded
           }`}
         >
-          {kanji.freq && (
-            <p className={styles.contentField}>Frequency: {kanji.freq}</p>
+          {kanjiItem.freq && (
+            <p className={styles.contentField}>Frequency: {kanjiItem.freq}</p>
           )}
-          {kanji.strokes && (
-            <p className={styles.contentField}>Strokes: {kanji.strokes}</p>
+          {kanjiItem.strokes && (
+            <p className={styles.contentField}>Strokes: {kanjiItem.strokes}</p>
           )}
-          {kanji.grade && (
-            <p className={styles.contentField}>Grade: {kanji.grade}</p>
+          {kanjiItem.grade && (
+            <p className={styles.contentField}>Grade: {kanjiItem.grade}</p>
           )}
         </div>
       </section>

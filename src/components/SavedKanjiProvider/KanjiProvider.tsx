@@ -1,4 +1,4 @@
-import { SavedKanjiMap } from "../../utils/types";
+import type { SavedKanjiMap, KanjiItem } from "../../utils/types";
 import {
   useContext,
   createContext,
@@ -6,7 +6,7 @@ import {
   type SetStateAction,
   type Dispatch,
 } from "react";
-import { Kanji } from "../../utils/types";
+import { saveKanjiData } from "../../utils/local-storage";
 
 const createFallback = (message: string) => {
   return () => {
@@ -23,18 +23,21 @@ export function useSavedKanjiHandler() {
   } = useSavedKanjiContext();
 
   return {
-    save(kanji: Kanji) {
-      setSavedKanji([
+    save(kanji: KanjiItem) {
+      const nextSavedKanji = [
         ...savedKanji,
         {
           ...kanji,
           saved: true,
         },
-      ]);
+      ];
+
+      setSavedKanji(nextSavedKanji);
       setSavedKanjiMap({
         ...savedKanjiMap,
         [`${kanji.id}`]: true,
       });
+      saveKanjiData(nextSavedKanji);
     },
     forget(id: number) {
       const nextSavedKanji = savedKanji.filter((kanji) => kanji.id !== id);
@@ -43,6 +46,7 @@ export function useSavedKanjiHandler() {
         ...savedKanjiMap,
         [`${id}`]: false,
       });
+      saveKanjiData(nextSavedKanji);
     },
   };
 }
@@ -53,15 +57,15 @@ export function useSavedKanjiContext() {
 }
 
 const SavedKanjiContext = createContext<{
-  setSavedKanji?: Dispatch<SetStateAction<Kanji[]>>;
-  savedKanji?: Kanji[];
+  setSavedKanji?: Dispatch<SetStateAction<KanjiItem[]>>;
+  savedKanji?: KanjiItem[];
   savedKanjiMap?: SavedKanjiMap;
   setSavedKanjiMap?: Dispatch<SetStateAction<SavedKanjiMap>>;
 }>({});
 
 export type SavedKanjiProviderProps = {
   children: React.ReactNode;
-  initialSavedKanji: Kanji[];
+  initialSavedKanji: KanjiItem[];
   initialSavedKanjiMap: SavedKanjiMap;
 };
 
@@ -70,7 +74,7 @@ export function SavedKanjiProvider({
   initialSavedKanjiMap,
   initialSavedKanji,
 }: SavedKanjiProviderProps) {
-  const [savedKanji, setSavedKanji] = useState<Kanji[]>(initialSavedKanji);
+  const [savedKanji, setSavedKanji] = useState<KanjiItem[]>(initialSavedKanji);
   const [savedKanjiMap, setSavedKanjiMap] = useState(initialSavedKanjiMap);
 
   return (

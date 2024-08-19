@@ -36,9 +36,16 @@
   --soft-blue: #a4c8e1;
   --pale-green: #b7e4d9;
   --lavender: #e1c6e1;
-  --light-gray: #f0f4f8;
+  --pale-moon: #f0f4f8;
   --cream: #fff5e1;
   --soft-white: #ffffff;
+
+  --light-gray: #a9a9a9; /* Light Gray */
+  --medium-gray: #808080; /* Medium Gray */
+  --dark-gray: #4b4b4b; /* Dark Gray */
+  --slate-gray: #708090; /* Slate Gray */
+  --dim-gray: #696969; /* Dim Gray */
+  --charcoal-gray: #333333; /* Charcoal Gray */
 }
 
 a {
