@@ -1,12 +1,19 @@
 .card {
   min-height: 30rem;
-  border-radius: 1rem;
+
   position: relative;
+
+  border-radius: 1rem;
+
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+
   overflow: hidden;
+
   background: var(--light-gray);
+
+  box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.05);
+
   animation: shadow 3s infinite alternate;
 }
 
@@ -23,13 +30,15 @@
   --anim-top-start: -10%;
   --anim-bottom-end: 110%;
 
+  height: 10px;
+  width: 10px;
+
   position: absolute; /* Changed to absolute for better control */
+
   display: flex;
   align-items: center;
   justify-content: center;
 
-  height: 10px;
-  width: 10px;
   animation: move 1.5s infinite ease-in-out; /* Changed to ease-in-out for smoother animation */
 }
 
@@ -45,16 +54,14 @@
 }
 
 .pivot::before {
-  background-color: white;
-  box-shadow: 0 0 40px rgba(255, 255, 255, 1);
   content: "";
+
   transform: rotate(-60deg);
+
   min-height: 3rem;
   min-width: 100vw;
-  opacity: 1;
-  transition: opacity 0.5s ease; /* Smooth transition for opacity */
-}
 
-.pivot:hover::before {
-  opacity: 0.5; /* Slightly fade on hover for interactivity */
+  background-color: white;
+
+  box-shadow: 0 0 40px rgba(255, 255, 255, 1);
 }

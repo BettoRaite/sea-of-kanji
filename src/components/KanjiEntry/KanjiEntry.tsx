@@ -1,13 +1,14 @@
 import type { KanjiItem } from "../../utils/types";
-import { useSavedKanjiHandler } from "../SavedKanjiProvider/KanjiProvider";
+import { useKanjiCollectionHandler } from "../KanjiCollectionProvider/KanjiCollectionProvider";
 import styles from "./kanjiEntry.module.css";
 import removeIcon from "/icons/remove.svg";
+import lookIcon from "/icons/look.svg";
 
 export type KanjiEntryProps = {
   kanji: KanjiItem;
 };
 export function KanjiEntry({ kanji }: KanjiEntryProps) {
-  const handler = useSavedKanjiHandler();
+  const handler = useKanjiCollectionHandler();
 
   function handleForget() {
     if (kanji.id) {
@@ -19,7 +20,9 @@ export function KanjiEntry({ kanji }: KanjiEntryProps) {
     <section className={styles.layout}>
       <div className={styles.characterButtonLayout}>
         <p className={styles.kanji}>{kanji.character}</p>
-        <button type="button">Look</button>
+        <button type="button">
+          <img src={lookIcon} alt="take a look at kanji card" />
+        </button>
       </div>
 
       <button

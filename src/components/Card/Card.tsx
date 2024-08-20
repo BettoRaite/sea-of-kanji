@@ -1,8 +1,8 @@
 import styles from "./card.module.css";
-import { useSavedKanjiHandler } from "../SavedKanjiProvider/KanjiProvider";
+import { useKanjiCollectionHandler } from "../KanjiCollectionProvider/KanjiCollectionProvider";
 import favoriteIcon from "/icons/favorite-filled.svg";
 import type { KanjiItem } from "../../utils/types";
-import { useSavedKanjiContext } from "../SavedKanjiProvider/KanjiProvider";
+import { useKanjiCollectionContext } from "../KanjiCollectionProvider/KanjiCollectionProvider";
 import chevronUpIcon from "/icons/chevron-up.svg";
 import { useState } from "react";
 
@@ -30,8 +30,8 @@ function extractKanjiItemWords(kanjiItem: KanjiItem): string[] {
 export function Card({ kanjiItem }: CardProps) {
   const [expandedContent, setExpandedContent] = useState<ContentType>("");
 
-  const kanjiHandler = useSavedKanjiHandler();
-  const { savedKanjiMap = {} } = useSavedKanjiContext();
+  const kanjiHandler = useKanjiCollectionHandler();
+  const { kanjiIdsMap = {} } = useKanjiCollectionContext();
   function handleSave() {
     kanjiHandler.save(kanjiItem);
   }
@@ -46,7 +46,7 @@ export function Card({ kanjiItem }: CardProps) {
     setExpandedContent(contentType === expandedContent ? "" : contentType);
   }
 
-  const isSaved = savedKanjiMap[kanjiItem.id ?? ""];
+  const isSaved = kanjiIdsMap[kanjiItem.id ?? ""];
   const kanjiWords = extractKanjiItemWords(kanjiItem);
   return (
     <div className={styles.card}>

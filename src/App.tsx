@@ -18,8 +18,8 @@ function App() {
       <div className="blur-background" />
       <Header />
       <MainLayout
-        initialSavedKanji={savedKanji}
-        initialSavedKanjiMap={savedKanjiMap}
+        initialKanjiCollection={savedKanji}
+        initialKanjiIdsMap={savedKanjiMap}
       />
     </>
   );

@@ -1,5 +1,5 @@
 import styles from "./kanjiCollectionOverlay.module.css";
-import { useSavedKanjiContext } from "../SavedKanjiProvider/KanjiProvider";
+import { useKanjiCollectionContext } from "../KanjiCollectionProvider/KanjiCollectionProvider";
 import { KanjiEntry } from "../KanjiEntry/KanjiEntry";
 import favoriteIcon from "/icons/favorite-filled.svg";
 
@@ -9,7 +9,7 @@ type KanjiCollectionOverlayProps = {
 export function KanjiCollectionOverlay({
   isHidden,
 }: KanjiCollectionOverlayProps) {
-  const { savedKanji } = useSavedKanjiContext();
+  const { kanjiCollection } = useKanjiCollectionContext();
 
   return (
     <section
@@ -20,7 +20,7 @@ export function KanjiCollectionOverlay({
         <img src={favoriteIcon} alt="A kanji collection." />
       </div>
       <div className={styles.entriesLayout}>
-        {savedKanji?.map((k) => {
+        {kanjiCollection?.map((k) => {
           return <KanjiEntry key={k.id} kanji={k} />;
         })}
       </div>
