@@ -17,11 +17,18 @@ function extractKanjiItemWords(kanjiItem: KanjiItem): string[] {
   const wordMeaning = [];
 
   for (const word of words) {
-    for (const kanji of word.kanji) {
+    for (let i = 0; i < word.kanji.length; ++i) {
+      const kanji = word.kanji[i];
       if (kanji.includes(kanjiItem.character)) {
-        wordMeaning.push(`${kanji} - ${word.meanings.join(", ")}`);
+        let kana = "";
+        if (word.kanji.length === word.kana.length) {
+          kana = word?.kana[i];
+        }
+        wordMeaning.push(
+          `${kanji} ${kana && `(${kana})`} - ${word.meanings.join(", ")}`
+        );
+        break;
       }
-      break;
     }
   }
 

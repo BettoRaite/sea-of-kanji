@@ -58,7 +58,7 @@
 }
 
 body {
-  background: var(--autumn-sky);
+  background: linear-gradient(#87cefa, #0077b6ff 20%);
   margin: 0;
   padding: 0;
   background-size: cover; /* Ensures the background image covers the entire body */

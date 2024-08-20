@@ -1,15 +1,22 @@
 .card {
   position: relative;
+
   width: 90%;
   min-height: 25rem;
+
   padding: 1rem;
+
   background-color: var(--pale-moon);
+
   border-radius: 1rem;
+
   display: flex;
   flex-direction: column;
   gap: 2rem;
+
   overflow-y: auto; /* Use 'auto' for better UX */
   overflow-x: hidden;
+
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
 }
 
@@ -198,8 +205,6 @@
 
 @media (min-width: 768px) {
   .card {
-    justify-self: center;
-    height: min-content;
   }
   .kanji {
     font-size: 2rem;
@@ -208,8 +213,6 @@
 
 @media (min-width: 1280px) {
   .card {
-    justify-self: center;
-    height: max-content;
   }
   .kanji {
     font-size: 3rem;
