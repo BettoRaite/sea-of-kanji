@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { NotFoundError } from "./error";
+import type { KanjiQueryResult, KanjiItem } from "kanjibreak-api-types";
 
 const RAPID_API_KEY = import.meta.env.VITE_RAPID_API_KEY;
 
@@ -14,7 +15,7 @@ const FETCH_OPTIONS = {
 };
 
 export function useFetch(searchQuery: string) {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<null | KanjiItem[]>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<boolean | null>(null);
 
@@ -40,7 +41,7 @@ export function useFetch(searchQuery: string) {
         if (response.status === 400) {
           throw new NotFoundError("Not found.");
         }
-        const data = await response.json();
+        const data = (await response.json()) as KanjiQueryResult;
         if (!Array.isArray(data.items)) {
           throw new NotFoundError("Not found.");
         }
