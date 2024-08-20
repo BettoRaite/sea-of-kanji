@@ -1,4 +1,4 @@
-import styles from "./card.module.css";
+import styles from "./cardSceleton.module.css";
 import type { KanjiItem } from "../../utils/types";
 
 export type CardProps = {
@@ -6,5 +6,9 @@ export type CardProps = {
 };
 
 export function CardSceleton() {
-  return <div className={styles.card} />;
+  return (
+    <div className={styles.card}>
+      <div className={styles.pivot} />
+    </div>
+  );
 }
