@@ -2,10 +2,11 @@ import styles from "./header.module.css";
 
 export function Header() {
   return (
-    <header className={styles.header}>
-      <h2>SeaOfKanji</h2>
-
-      <nav className={styles.nav}>
+    <header className={styles.layout}>
+      <div className={styles.headerWrapper}>
+        <h2 className={styles.header}>Sea Of Kanji</h2>
+      </div>
+      {/* <nav className={styles.nav}>
         <ul className={styles.navLinks}>
           <li className={styles.navLinksItem}>
             <a className={styles.link} href="/">
@@ -25,7 +26,7 @@ export function Header() {
             </a>
           </li>
         </ul>
-      </nav>
+      </nav> */}
     </header>
   );
 }

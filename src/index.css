@@ -22,7 +22,7 @@
   --deep-blue-light: hsla(210, 70%, 40%, 0.8);
   --teal: hsla(180, 60%, 40%, 1);
   --light-mint: hsla(160, 70%, 80%, 1);
-  --soft-yellow: hsla(60, 100%, 75%, 1);
+  --soft-yellow: #ffff80;
   --coral: #ff794d;
   --lavender: hsla(240, 60%, 80%, 1);
   --pale-gray: #e6e6e6;
@@ -46,6 +46,12 @@
   --slate-gray: #708090; /* Slate Gray */
   --dim-gray: #696969; /* Dim Gray */
   --charcoal-gray: #333333; /* Charcoal Gray */
+
+  --blush-pink: #ffb6c1; /* Blush Pink */
+  --cherry-blossom: #ffb7c5; /* Cherry Blossom */
+  --playful-pink: #ff69b4; /* Playful Pink */
+  --lavender-blush: #fff0f5; /* Lavender Blush */
+  --autumn-sky: #87cefa; /* Autumn Sky */
 }
 
 a {
@@ -57,14 +63,28 @@ a:hover {
   color: #535bf2;
 }
 body {
+  background: var(--autumn-sky);
   margin: 0;
   padding: 0;
-  background-color: #ffffff;
-  min-width: 320px;
+  background-size: cover; /* Ensures the background image covers the entire body */
+  background-position: center; /* Centers the background image */
+  background-repeat: repeat;
+  color: var(--dark-gray);
 }
-* {
-  color: var(--light-gray);
+
+.blur-background {
+  position: fixed; /* Keeps the background fixed */
+  top: -1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("./ricardo-gomez-angel-8XDfQmFImtQ-unsplash.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: blur(3px); /* Adjust the blur amount as needed */
+  z-index: -1; /* Places the blurred background behind other content */
 }
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

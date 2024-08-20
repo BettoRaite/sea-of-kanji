@@ -10,7 +10,7 @@ export type CardProps = {
   kanjiItem: KanjiItem;
 };
 
-type ContentType = "words" | "miscs" | "";
+type ContentType = "words" | "miscs" | "meanings" | "";
 
 function extractKanjiItemWords(kanjiItem: KanjiItem): string[] {
   const words = kanjiItem.words;
@@ -19,7 +19,7 @@ function extractKanjiItemWords(kanjiItem: KanjiItem): string[] {
   for (const word of words) {
     for (const kanji of word.kanji) {
       if (kanji.includes(kanjiItem.character)) {
-        wordMeaning.push(`${kanji} - ${word.meanings}`);
+        wordMeaning.push(`${kanji} - ${word.meanings.join(", ")}`);
       }
       break;
     }
@@ -94,11 +94,36 @@ export function Card({ kanjiItem }: CardProps) {
       </div>
 
       <section className={styles.sectionLayout}>
-        <span className={styles.readingHint}>Meanings</span>
-        {kanjiItem.meanings.map((meaning, i) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-          <p key={i}>{meaning}</p>
-        ))}
+        <button
+          className={styles.toggleButton}
+          type="button"
+          onClick={() => handleExpandContent("meanings")}
+        >
+          <h4
+            className={`${styles.sectionHeader} ${
+              expandedContent === "meanings" && styles.sectionHeaderExpanded
+            } ${styles.meaningsHeader}`}
+            style={{
+              padding: "1rem",
+            }}
+          >
+            <img src={chevronUpIcon} alt="expand section" />
+            Meanings
+          </h4>
+        </button>
+
+        <div
+          className={`${styles.contentWrapper} ${
+            expandedContent === "meanings" && styles.contentWrapperExpanded
+          }`}
+        >
+          {kanjiItem.meanings.map((meaning, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+            <p className={styles.contentField} key={i}>
+              {meaning}
+            </p>
+          ))}
+        </div>
       </section>
 
       <section className={styles.sectionLayout}>
@@ -124,7 +149,9 @@ export function Card({ kanjiItem }: CardProps) {
         >
           {kanjiWords.map((w, i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-            <p key={i}>{w}</p>
+            <p className={styles.contentField} key={i}>
+              {w}
+            </p>
           ))}
         </div>
       </section>

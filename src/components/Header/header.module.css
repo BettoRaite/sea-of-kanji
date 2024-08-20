@@ -1,5 +1,23 @@
-.header {
+@import url("https://fonts.googleapis.com/css2?family=New+Amsterdam&display=swap");
+.layout {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(#ffffff, #87cefa);
+}
+
+.header {
+  z-index: 1;
+  font-size: 6rem;
+  font-family: "New Amsterdam", sans-serif;
+  font-weight: bold;
+}
+
+.websiteLogo {
+  --size: 5rem;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 100%;
 }
 .nav {
   display: flex;

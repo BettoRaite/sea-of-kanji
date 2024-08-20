@@ -15,6 +15,7 @@ function App() {
 
   return (
     <>
+      <div className="blur-background" />
       <Header />
       <MainLayout
         initialSavedKanji={savedKanji}

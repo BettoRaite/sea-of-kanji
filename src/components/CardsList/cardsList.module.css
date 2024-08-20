@@ -4,14 +4,13 @@
   align-items: start;
   flex-direction: column;
   gap: 4rem;
-  width: 100%;
+  width: 90%;
 }
 
 @media (min-width: 768px) {
   .cardsLayout {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    justify-content: center;
     align-items: start;
     gap: 1rem;
     width: 90%;

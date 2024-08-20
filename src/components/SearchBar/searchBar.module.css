@@ -1,6 +1,6 @@
 .layout {
   min-width: 280px;
-  width: 300px;
+  width: fit-content;
   max-width: 500px;
   display: grid;
   grid-template-columns: 1fr auto;
