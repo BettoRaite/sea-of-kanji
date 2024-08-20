@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { NotFoundError } from "./error";
 
 const RAPID_API_KEY = import.meta.env.VITE_RAPID_API_KEY;
+
 const BASE_URL = "https://kanjibreakapi.p.rapidapi.com";
 const DEFAULT_FETCH_URL = `${BASE_URL}/kanji`;
 const FETCH_OPTIONS = {
@@ -19,10 +20,12 @@ export function useFetch(searchQuery: string) {
 
   useEffect(() => {
     if (typeof RAPID_API_KEY !== "string") {
-      console.error("NO RAPID API KEY");
+      console.error(
+        "Rapid api key is required.\nYOu can get the api key through following this link: https://rapidapi.com/BettoRaite/api/kanjibreakapi "
+      );
       return;
     }
-
+    console.log("Fetching data");
     let ignore = false;
     let fetchUrl = DEFAULT_FETCH_URL;
 

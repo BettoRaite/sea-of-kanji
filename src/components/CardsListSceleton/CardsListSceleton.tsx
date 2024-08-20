@@ -4,7 +4,7 @@ import styles from "./cardsList.module.css";
 export function CardsListSceleton() {
   const cards = [];
   for (let i = 0; i < 20; ++i) {
-    cards.push(<CardSceleton />);
+    cards.push(<CardSceleton key={i} />);
   }
   return <div className={styles.cardsLayout}>{cards}</div>;
 }

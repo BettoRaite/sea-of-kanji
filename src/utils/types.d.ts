@@ -1,12 +1,6 @@
-import type { InsertKanji } from "../schema/schema";
+import type { KanjiItem as K } from "kanjibreak-api-types";
 
-export interface KanjiItem extends InsertKanji {
-  words: {
-    id: number;
-    kanji: string[];
-    kana: string[];
-    meanings: string[];
-  }[];
+export interface KanjiItem extends K {
   saved?: boolean;
 }
 

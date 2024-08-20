@@ -21,6 +21,20 @@
 .mainLayoutHidden {
   top: 100%;
 }
+.headerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.headerWrapper img {
+  --size: 3rem;
+  height: var(--size);
+  width: var(--size);
+}
+.header {
+  font-size: 2.4rem;
+  text-align: center;
+}
 .entriesLayout {
   display: flex;
   flex-direction: column;

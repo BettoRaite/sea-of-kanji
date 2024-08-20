@@ -1,22 +1,24 @@
-import styles from "./savedOverlay.module.css";
+import styles from "./kanjiCollectionOverlay.module.css";
 import { useSavedKanjiContext } from "../SavedKanjiProvider/KanjiProvider";
 import { KanjiEntry } from "../KanjiEntry/KanjiEntry";
 import favoriteIcon from "/icons/favorite-filled.svg";
 
-type SavedOverlayProps = {
+type KanjiCollectionOverlayProps = {
   isHidden: boolean;
 };
-export function SavedOverlay({ isHidden }: SavedOverlayProps) {
+export function KanjiCollectionOverlay({
+  isHidden,
+}: KanjiCollectionOverlayProps) {
   const { savedKanji } = useSavedKanjiContext();
 
   return (
     <section
       className={`${styles.mainLayout} ${isHidden && styles.mainLayoutHidden}`}
     >
-      <h2>
-        Your kanji collection
+      <div className={styles.headerWrapper}>
+        <h2 className={styles.header}>Your kanji collection</h2>
         <img src={favoriteIcon} alt="A kanji collection." />
-      </h2>
+      </div>
       <div className={styles.entriesLayout}>
         {savedKanji?.map((k) => {
           return <KanjiEntry key={k.id} kanji={k} />;
