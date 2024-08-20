@@ -9,6 +9,7 @@ import { NotFound } from "../NotFound/NotFound";
 import { CardsListSceleton } from "../CardsListSceleton/CardsListSceleton";
 import { BottomMenu } from "../BottomMenu/BottomMenu";
 import { KanjiCollectionOverlay } from "../KanjiCollectionOverlay/KanjiCollectionOverlay";
+// import { FilterMenu } from "../FilterMenu/FilterMenu";
 
 type MainLayoutProps = Pick<
   KanjiCollectionProviderProps,
@@ -22,12 +23,14 @@ export function MainLayout({
   const [searchQuery, setSearchQuery] = useState("");
   const { data, error, isLoading } = useFetch(searchQuery);
   const [showOverlay, setShowOverlay] = useState(false);
+  // const [isFilterMenuVisible, setIsFilterMenuVisible] = useState(false);
 
   return (
-    <main className={styles.mainLayout}>
+    <main className={styles.layout}>
       <SearchBar
         onSearch={(searchQuery: string) => setSearchQuery(searchQuery)}
       />
+      {/* <FilterMenu isHidden={!isFilterMenuVisible} /> */}
 
       <KanjiCollectionProvider
         initialKanjiCollection={initialKanjiCollection}
@@ -36,7 +39,6 @@ export function MainLayout({
         {isLoading && <CardsListSceleton />}
         {!error && !isLoading && <CardsList kanjiList={data ?? []} />}
         {!isLoading && !error && !data && <NotFound />}
-
         <KanjiCollectionOverlay isHidden={!showOverlay} />
         <BottomMenu
           onShowOverlay={() => {

@@ -1,0 +1,12 @@
+.layout {
+  width: 90%;
+  background-color: var(--soft-white);
+  height: 30rem;
+  border-radius: 1rem;
+  overflow: hidden;
+
+  transition: height 0.3s;
+}
+.layoutHidden {
+  height: 0;
+}

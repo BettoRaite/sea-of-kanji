@@ -1,6 +1,7 @@
 import type { ChangeEvent } from "react";
 import styles from "./searchBar.module.css";
 import searchIcon from "/icons/search.svg";
+import filterMenuIcon from "/icons/filter-menu-open.svg";
 import { useState } from "react";
 
 type SearchBarProps = {
@@ -17,22 +18,27 @@ export function SearchBar({ onSearch }: SearchBarProps) {
   }
   return (
     <div className={styles.layout}>
-      <input
-        className={styles.searchBar}
-        id="search-bar"
-        type="text"
-        aria-label="Search kanji"
-        value={input}
-        onChange={handlerChange}
-        placeholder="Type any kanji character"
-      />
-      <button
-        className={styles.searchButton}
-        type="button"
-        onClick={handleClick}
-      >
-        <img src={searchIcon} alt="Search kanji" />
+      <button className={styles.toggleFilterMenuButton} type="button">
+        <img src={filterMenuIcon} alt="Expand filter menu" />
       </button>
+      <div className={styles.searchBarLayout}>
+        <input
+          className={styles.searchBar}
+          id="search-bar"
+          type="text"
+          aria-label="Search kanji"
+          value={input}
+          onChange={handlerChange}
+          placeholder="Type any kanji character"
+        />
+        <button
+          className={styles.searchButton}
+          type="button"
+          onClick={handleClick}
+        >
+          <img src={searchIcon} alt="Search kanji" />
+        </button>
+      </div>
     </div>
   );
 }

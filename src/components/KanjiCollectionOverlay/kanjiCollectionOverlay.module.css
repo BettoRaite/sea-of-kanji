@@ -29,14 +29,14 @@
   gap: 0.5rem;
 }
 .headerWrapper img {
-  --size: 3rem;
+  --size: 2rem;
   height: var(--size);
   width: var(--size);
   filter: brightness(0) saturate(100%) invert(66%) sepia(9%) saturate(7183%)
     hue-rotate(316deg) brightness(106%) contrast(96%);
 }
 .header {
-  font-size: 2.4rem;
+  font-size: 1.3rem;
   text-align: center;
   color: var(--medium-gray);
 }
@@ -44,4 +44,25 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+@media (min-width: 768px) {
+  .headerWrapper img {
+    --size: 3rem;
+    height: var(--size);
+    width: var(--size);
+  }
+  .header {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .headerWrapper img {
+    --size: 2.8rem;
+    height: var(--size);
+    width: var(--size);
+  }
+  .header {
+    font-size: 2.2rem;
+  }
 }

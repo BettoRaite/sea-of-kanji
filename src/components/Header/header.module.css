@@ -3,20 +3,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(#ffffff, #87cefa);
-}
 
+  margin-bottom: 5rem;
+}
 .header {
+  margin-top: 1rem;
   z-index: 1;
-  font-size: 6rem;
-  font-family: "New Amsterdam", sans-serif;
-  font-weight: bold;
+  font-size: 3rem; /* Adjust font size as needed */
+  font-weight: bold; /* Make the text bold */
+  background: linear-gradient(135deg, #00aaff, #0047ab); /* Blue gradient */
+  -webkit-background-clip: text; /* Clip the background to the text */
+  -webkit-text-fill-color: transparent; /* Make the text color transparent */
+  text-align: center; /* Center the text */
+  margin-top: 1rem; /* Add some margin */
 }
 
 .websiteLogo {
   --size: 5rem;
+
   width: var(--size);
   height: var(--size);
+
   border-radius: 100%;
 }
 .nav {
@@ -29,4 +36,9 @@
 }
 .navLinksItem {
   list-style: none;
+}
+@media (min-width: 768) {
+  .header {
+    font-size: 6rem;
+  }
 }
