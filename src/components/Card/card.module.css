@@ -62,7 +62,7 @@
   background-color: var(--soft-white);
   border-radius: 10px;
   font-size: 3rem;
-  padding: 1.5rem 2rem; /* Simplified padding */
+  padding: 1.5rem 2rem;
 }
 
 .readingsLayout {

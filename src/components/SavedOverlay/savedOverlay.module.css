@@ -1,6 +1,5 @@
 .mainLayout {
   display: flex;
-  align-items: center;
   flex-direction: column;
 
   --padding-sides: 1rem;
@@ -21,4 +20,9 @@
 }
 .mainLayoutHidden {
   top: 100%;
+}
+.entriesLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }

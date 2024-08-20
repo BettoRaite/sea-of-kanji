@@ -85,9 +85,13 @@ body {
   z-index: -1; /* Places the blurred background behind other content */
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.kanji {
+  color: var(--cool-purple);
+  border: 2px solid var(--cool-purple);
+  background-color: var(--soft-white);
+  border-radius: 10px;
+  font-size: 3rem;
+  padding: 1.5rem 2rem;
 }
 
 button {
