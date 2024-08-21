@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NotFoundError } from "./error";
+import { NotFoundError } from "../utils/error";
 import type { KanjiQueryResult, KanjiItem } from "kanjibreak-api-types";
 
 const RAPID_API_KEY = import.meta.env.VITE_RAPID_API_KEY;

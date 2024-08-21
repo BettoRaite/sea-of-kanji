@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CardsList } from "../CardsList/CardsList";
-import { useFetch } from "../../utils/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 import { KanjiCollectionProvider } from "../KanjiCollectionProvider/KanjiCollectionProvider";
 import type { KanjiCollectionProviderProps } from "../KanjiCollectionProvider/KanjiCollectionProvider";
 import { SearchBar } from "../SearchBar/SearchBar";

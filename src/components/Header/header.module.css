@@ -6,16 +6,64 @@
 
   margin-bottom: 5rem;
 }
+.headerWrapper {
+  overflow: hidden;
+  width: 100%;
+
+  --padding-sides: 2rem;
+  padding-left: var(--padding-sides);
+  padding-right: var(--padding-sides);
+
+  background-color: var(--soft-white);
+
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.sun {
+  position: absolute;
+  --bottom-start: -70%;
+  bottom: var(--bottom-start);
+  left: 9%;
+  content: "";
+
+  --size: 5rem;
+  width: var(--size);
+  height: var(--size);
+
+  border-radius: 100%;
+
+  /* Create a radial gradient from orange to red */
+  background: linear-gradient(
+    135deg,
+    rgba(255, 223, 0, 1) 0%,
+    rgba(255, 165, 0, 1) 50%,
+    #ff4500 100%
+  );
+
+  box-shadow: 0 0 10px rgba(255, 165, 0, 0.4);
+  opacity: 0.8;
+
+  transition: all 3s;
+}
+.sun:hover {
+  opacity: 1;
+  transform: translateY(-1rem);
+  box-shadow: 0 0 40px rgba(255, 165, 0, 0.8);
+}
+
 .header {
   margin-top: 1rem;
 
-  font-size: 3rem; /* Adjust font size as needed */
+  font-size: 1.5rem; /* Adjust font size as needed */
   font-weight: bold; /* Make the text bold */
 
   background: linear-gradient(135deg, #00aaff, #0047ab); /* Blue gradient */
 
+  background-clip: text;
   -webkit-background-clip: text; /* Clip the background to the text */
   -webkit-text-fill-color: transparent; /* Make the text color transparent */
+
   text-align: center; /* Center the text */
 }
 
@@ -38,8 +86,30 @@
 .navLinksItem {
   list-style: none;
 }
-@media (min-width: 768) {
+@media (min-width: 648px) {
+  .sun {
+    left: 20%;
+  }
+}
+@media (min-width: 768px) {
   .header {
-    font-size: 6rem;
+    font-size: 3rem;
+  }
+  .sun {
+    --size: 9rem;
+    width: var(--size);
+    height: var(--size);
+    left: 15%;
+  }
+}
+@media (min-width: 1024px) {
+  .header {
+    font-size: 3rem;
+  }
+  .sun {
+    --size: 10rem;
+    width: var(--size);
+    height: var(--size);
+    left: 15%;
   }
 }

@@ -4,6 +4,7 @@ export function Header() {
   return (
     <header className={styles.layout}>
       <div className={styles.headerWrapper}>
+        <span className={styles.sun} />
         <h2 className={styles.header}>Sea Of Kanji</h2>
       </div>
       {/* <nav className={styles.nav}>
