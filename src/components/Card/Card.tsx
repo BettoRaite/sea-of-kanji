@@ -67,14 +67,7 @@ export function Card({ kanjiItem }: CardProps) {
         </button>
       )}
 
-      {kanjiItem.saved && (
-        <button className={styles.button} type="button" onClick={handleForget}>
-          <img src={""} alt="forget kanji" />
-        </button>
-      )}
-
       <div className={styles.topLayout}>
-        {/* <p>{kanji.jlpt}</p> */}
         <p className={styles.kanji}>{kanjiItem.character}</p>
         <section className={styles.readingsLayout}>
           <h4
@@ -184,6 +177,9 @@ export function Card({ kanjiItem }: CardProps) {
             expandedContent === "miscs" && styles.contentWrapperExpanded
           }`}
         >
+          {kanjiItem.grade && (
+            <p className={styles.contentField}>JLPT: {kanjiItem.jlpt}</p>
+          )}
           {kanjiItem.freq && (
             <p className={styles.contentField}>Frequency: {kanjiItem.freq}</p>
           )}

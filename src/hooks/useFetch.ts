@@ -26,7 +26,9 @@ export function useFetch(searchQuery: string) {
       );
       return;
     }
-    console.log("Fetching data");
+
+    setIsLoading(true);
+
     let ignore = false;
     let fetchUrl = DEFAULT_FETCH_URL;
 
