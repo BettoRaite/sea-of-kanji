@@ -6,7 +6,7 @@
   padding-left: var(--padding-sides);
   padding-right: var(--padding-sides);
 
-  background: linear-gradient(#caf0f8ff 0 1%, #23587b 30%);
+  background: var(--non-photo-blue);
 
   position: fixed;
   z-index: 1;
@@ -15,10 +15,12 @@
   right: 0;
   bottom: 0;
 
-  transition: all 0.3s;
+  transition: all 0.4s;
+
   overflow-y: scroll;
 }
 .mainLayoutHidden {
+  transition: all 0.4s;
   top: 100%;
 }
 .headerWrapper {
@@ -32,12 +34,14 @@
   --size: 2rem;
   height: var(--size);
   width: var(--size);
+
   filter: brightness(0) saturate(100%) invert(66%) sepia(9%) saturate(7183%)
     hue-rotate(316deg) brightness(106%) contrast(96%);
 }
 .header {
   font-size: 1.3rem;
   text-align: center;
+
   color: var(--light-blue);
 }
 .entriesLayout {

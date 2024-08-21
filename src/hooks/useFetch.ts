@@ -14,12 +14,14 @@ const FETCH_OPTIONS = {
   },
 };
 
-export function useFetch(searchQuery: string) {
+export function useFetch(searchQuery: string, page: number) {
   const [data, setData] = useState<null | KanjiItem[]>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<boolean | null>(null);
+  const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
+    console.log("Fetching data");
     if (typeof RAPID_API_KEY !== "string") {
       console.error(
         "Rapid api key is required.\nYOu can get the api key through following this link: https://rapidapi.com/BettoRaite/api/kanjibreakapi "
@@ -39,7 +41,7 @@ export function useFetch(searchQuery: string) {
 
     async function initReq() {
       try {
-        const response = await fetch(fetchUrl, FETCH_OPTIONS);
+        const response = await fetch(`${fetchUrl}?page=${page}`, FETCH_OPTIONS);
         if (response.status === 400) {
           throw new NotFoundError("Not found.");
         }
@@ -58,10 +60,12 @@ export function useFetch(searchQuery: string) {
         if (error instanceof NotFoundError) {
           setData(null);
           setIsLoading(false);
+          setHasMore(false);
         } else {
           console.error(`Failed to fetch data:\n${error}`);
           setError(true);
           setIsLoading(false);
+          setHasMore(false);
         }
       }
     }
@@ -71,7 +75,7 @@ export function useFetch(searchQuery: string) {
     return () => {
       ignore = true;
     };
-  }, [searchQuery]);
+  }, [searchQuery, page]);
 
-  return { data, isLoading, error };
+  return { data, isLoading, error, hasMore };
 }

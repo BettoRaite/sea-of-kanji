@@ -10,6 +10,8 @@ import { CardsListSceleton } from "../CardsListSceleton/CardsListSceleton";
 import { BottomMenu } from "../BottomMenu/BottomMenu";
 import { KanjiCollectionOverlay } from "../KanjiCollectionOverlay/KanjiCollectionOverlay";
 // import { FilterMenu } from "../FilterMenu/FilterMenu";
+import { InfiniteScroll } from "../InfiniteScroll/InfiniteScroll";
+import type { KanjiItem } from "kanjibreak-api-types";
 
 type MainLayoutProps = Pick<
   KanjiCollectionProviderProps,
@@ -21,9 +23,18 @@ export function MainLayout({
   initialKanjiIdsMap,
 }: MainLayoutProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const { data, error, isLoading } = useFetch(searchQuery);
+  const [page, setPage] = useState(1);
+  const [kanjiItems, setKanjiItems] = useState<KanjiItem[]>([]);
+  const { data, error, isLoading, hasMore } = useFetch(searchQuery, page);
   const [showOverlay, setShowOverlay] = useState(false);
   // const [isFilterMenuVisible, setIsFilterMenuVisible] = useState(false);
+
+  if (Array.isArray(data) && data.at(-1) !== kanjiItems.at(-1)) {
+    setKanjiItems([...kanjiItems, ...data]);
+  }
+  function handleNextPage() {
+    setPage(page + 1);
+  }
 
   return (
     <main className={styles.layout}>
@@ -37,7 +48,13 @@ export function MainLayout({
         initialKanjiIdsMap={initialKanjiIdsMap}
       >
         {isLoading && <CardsListSceleton />}
-        {!error && !isLoading && <CardsList kanjiList={data ?? []} />}
+        {!error && !isLoading && (
+          <>
+            <InfiniteScroll onNextPage={handleNextPage} hasMore={hasMore}>
+              <CardsList kanjiList={kanjiItems} />
+            </InfiniteScroll>
+          </>
+        )}
         {!isLoading && !error && !data && <NotFound />}
         <KanjiCollectionOverlay isHidden={!showOverlay} />
         <BottomMenu
