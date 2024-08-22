@@ -161,17 +161,58 @@ Actually, I got a whole video of me building the project.
 #### Day 3
 Much better cards. Finally a not yet working search bar and of course, words! Tho to be honest, it was empty at that time.
  <img src="progress/day3.png" alt="day 3">
-
-#### Day 7
+#### Day 5-6
 Search bar, words, website title, demo filter menu. (Beatiful isn't it?)
-`Desktop`
- <img src="progress/day7-2.png" alt="day 7 desktop view">
-`Tablet`
- <img src="progress/day7-1.png" alt="day 7 tablet view">
-`Tablet scroll`
- <img src="progress/day7-3.png" alt="day 7 tablet view scroll">
- `Search bar, mobile`
- <img src="progress/day7-4.png" alt="day 7 search bar mobile">
+##### Desktop
+<img src="progress/day7-2.png" alt="day 7 desktop view" width="200" height="auto">
+
+##### Tablet
+<img src="progress/day7-1.png" alt="day 7 tablet view" width="200" height="auto">
+
+##### Tablet Scroll
+<img src="progress/day7-3.png" alt="day 7 tablet view scroll" width="200" height="auto">
+
+##### Search Bar, Mobile
+<img src="progress/day7-4.png" alt="day 7 search bar mobile" width="200" height="auto">
+
+#### Day 7-8
+Today I did a lot and I don't remember what)
+But I fixed a very interesting bug.
+Here is the bug explanation. (Note I was lazy to think through.)
+```
+The user scrolls 100+ cards deep,
+and the infinite scroll updates the page count,
+initiating the next fetch cycle.
+Once the kanji data has been retrieved from the server,
+it is immediately set to the kanjiItems state.
+The user then clicks the search button without inputting any data.
+This action is handled by the search handler, which resets the page
+count but does not reset the kanjiItems state.
+After receiving a NotFoundError, the user clicks
+the search button again, which triggers another fetch for kanji data.
+The problem arises at the point when the kanjiItems
+state contains previous 200 items(items from page 1-2) and we're
+setting state with data from page 1.
+The way I check for setting the state is
+by comparing the last element of the newly fetched data with the
+last element of the kanjiItems state.
+These two elements will not be equal because the kanjiItems
+state contains 200 items (from page 2),
+while the current data corresponds to page 1.
+```
+##### Desktop
+![alt text](<progress/Screen Shot 2024-08-22 at 20.14.13.png>)
+##### Tablet
+![alt text](<progress/Screen Shot 2024-08-22 at 20.16.56.png>)
+##### Mobile
+![alt text](<progress/Screen Shot 2024-08-22 at 20.18.05.png>)
+##### Kanji collection
+##### Desktop
+![alt text](<progress/Screen Shot 2024-08-22 at 20.19.25.png>)
+##### Tablet
+![alt text](<progress/Screen Shot 2024-08-22 at 20.19.25-1.png>)
+##### Mobile
+![alt text](<progress/Screen Shot 2024-08-22 at 20.18.44.png>)
 ## Things learned so far
 
 - Infinite scroll. (Not as hard as I imagined.)
@@ -214,9 +255,32 @@ Search bar, words, website title, demo filter menu. (Beatiful isn't it?)
 ```
 - Loading sceletons, the main idea of which is to show user some data placeholders while fetch process is outgoing. 
 ```tsx
- {isLoading && <CardsListSceleton />}
+  if (isLoading) {
+    for (let i = 0; i < PAGE_SIZE; ++i) {
+      cards.push(<CardSceleton key={i} />);
+    }
+  }
 ```
-
+#### Day1
+The user scrolls 100+ cards deep,
+and the infinite scroll updates the page count, 
+initiating the next fetch cycle. 
+Once the kanji data has been retrieved from the server, 
+it is immediately set to the kanjiItems state.
+The user then clicks the search button without inputting any data. 
+This action is handled by the search handler, which resets the page
+count but does not reset the kanjiItems state.
+After receiving a NotFoundError, the user clicks 
+the search button again, which triggers another fetch for kanji data.
+The problem arises at the point when the kanjiItems 
+state contains previous 200 items(items from page 1-2) and we're
+setting state with data from page 1.  
+The way I check for setting the state is
+by comparing the last element of the newly fetched data with the
+last element of the kanjiItems state.
+These two elements will not be equal because the kanjiItems 
+state contains 200 items (from page 2), 
+while the current data corresponds to page 1. 
 <!-- ROADMAP -->
 ## Roadmap
 

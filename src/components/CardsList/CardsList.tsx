@@ -16,7 +16,6 @@ export function CardsList({ kanjiList, isLoading }: CardsListProps) {
   }
 
   if (isLoading) {
-    console.log(isLoading);
     for (let i = 0; i < PAGE_SIZE; ++i) {
       cards.push(<CardSceleton key={i} />);
     }
