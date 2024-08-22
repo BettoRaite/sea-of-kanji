@@ -1,4 +1,4 @@
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, KeyboardEvent } from "react";
 import styles from "./searchBar.module.css";
 import searchIcon from "/icons/search.svg";
 import filterMenuIcon from "/icons/filter-menu-open.svg";
@@ -16,6 +16,11 @@ export function SearchBar({ onSearch }: SearchBarProps) {
   function handleClick() {
     onSearch(input);
   }
+  function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.code === "Enter") {
+      onSearch(input);
+    }
+  }
   return (
     <div className={styles.layout}>
       <button className={styles.toggleFilterMenuButton} type="button">
@@ -30,6 +35,7 @@ export function SearchBar({ onSearch }: SearchBarProps) {
           value={input}
           onChange={handlerChange}
           placeholder="Type any kanji character"
+          onKeyDown={handleKeyDown}
         />
         <button
           className={styles.searchButton}

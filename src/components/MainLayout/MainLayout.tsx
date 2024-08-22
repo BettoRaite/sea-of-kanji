@@ -18,12 +18,13 @@ type MainLayoutProps = Pick<
   "initialKanjiCollection" | "initialKanjiIdsMap"
 >;
 
+const INITIAL_PAGE = 1;
 export function MainLayout({
   initialKanjiCollection,
   initialKanjiIdsMap,
 }: MainLayoutProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(INITIAL_PAGE);
   const [kanjiItems, setKanjiItems] = useState<KanjiItem[]>([]);
   const { data, error, isLoading, hasMorePages } = useFetch(searchQuery, page);
   const [showOverlay, setShowOverlay] = useState(false);
@@ -31,20 +32,21 @@ export function MainLayout({
   if (searchQuery && data && kanjiItems.at(-1) !== data.at(-1)) {
     setKanjiItems(data);
   } else {
-    if (data && kanjiItems.at(-1) !== data.at(-1)) {
-      setKanjiItems([...kanjiItems, ...data]);
+    if (data && kanjiItems.at(-1)?.id !== data.at(-1)?.id) {
+      setKanjiItems(kanjiItems.length === 1 ? data : [...kanjiItems, ...data]);
     }
   }
 
   function handleNextPage() {
     setPage(page + 1);
   }
-
+  function handleSearch(searchQuery: string) {
+    setPage(INITIAL_PAGE);
+    setSearchQuery(searchQuery);
+  }
   return (
     <main className={styles.layout}>
-      <SearchBar
-        onSearch={(searchQuery: string) => setSearchQuery(searchQuery)}
-      />
+      <SearchBar onSearch={handleSearch} />
       {/* <FilterMenu isHidden={!isFilterMenuVisible} /> */}
 
       <KanjiCollectionProvider
@@ -58,11 +60,18 @@ export function MainLayout({
               hasMorePages={hasMorePages}
               isLoading={isLoading}
             >
-              <CardsList kanjiList={kanjiItems} isLoading={isLoading} />
+              <CardsList
+                kanjiList={
+                  !searchQuery && kanjiItems.length === 1 ? [] : kanjiItems
+                }
+                isLoading={isLoading}
+              />
             </InfiniteScroll>
           </>
         )}
+
         {error instanceof NotFoundError && <NotFound />}
+
         <KanjiCollectionOverlay isHidden={!showOverlay} />
         <BottomMenu
           onShowOverlay={() => {

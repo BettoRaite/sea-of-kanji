@@ -11,14 +11,14 @@ export type CardsListProps = {
 
 export function CardsList({ kanjiList, isLoading }: CardsListProps) {
   const cards = [];
-
   for (const kanji of kanjiList) {
     cards.push(<Card key={kanji.id} kanjiItem={kanji} />);
   }
 
   if (isLoading) {
+    console.log(isLoading);
     for (let i = 0; i < PAGE_SIZE; ++i) {
-      cards.push(<CardSceleton />);
+      cards.push(<CardSceleton key={i} />);
     }
   }
 

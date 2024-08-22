@@ -22,7 +22,6 @@ type FetchState = {
   error: null | Error;
   hasMorePages: boolean;
 };
-
 export function useFetch(searchQuery: string, page: number) {
   const [fetchState, setFetchState] = useState<FetchState>({
     data: null,
@@ -75,12 +74,12 @@ export function useFetch(searchQuery: string, page: number) {
             const { items, metadata = {} } = data;
 
             if (!ignore) {
-              setFetchState((prevFetchState) => ({
-                ...prevFetchState,
+              setFetchState({
+                error: null,
                 isLoading: false,
                 data: items,
                 hasMorePages: (metadata.pages ?? 0) > 0,
-              }));
+              });
             }
             break;
           }
