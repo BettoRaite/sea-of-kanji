@@ -6,6 +6,8 @@
   padding-left: var(--padding-sides);
   padding-right: var(--padding-sides);
 
+  padding-bottom: 10rem;
+
   background: var(--non-photo-blue);
 
   position: fixed;
@@ -27,8 +29,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   gap: 0.5rem;
+
+  background-color: var(--soft-white);
+
+  border-radius: 10px;
+
+  margin: 1rem 0;
+
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
 }
 .headerWrapper img {
   --size: 2rem;

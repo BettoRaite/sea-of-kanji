@@ -13,12 +13,19 @@ const FETCH_OPTIONS = {
     "x-rapidapi-host": "kanjibreakapi.p.rapidapi.com",
   },
 };
-
+type FetchState = {
+  data: null | KanjiItem[];
+  isLoading: boolean;
+  error: null | Error;
+  hasMorePages: boolean;
+};
 export function useFetch(searchQuery: string, page: number) {
-  const [data, setData] = useState<null | KanjiItem[]>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<boolean | null>(null);
-  const [hasMore, setHasMore] = useState(true);
+  const [fetchState, setFetchState] = useState<FetchState>({
+    data: null,
+    isLoading: true,
+    error: null,
+    hasMorePages: true,
+  });
 
   useEffect(() => {
     console.log("Fetching data");
@@ -29,7 +36,10 @@ export function useFetch(searchQuery: string, page: number) {
       return;
     }
 
-    setIsLoading(true);
+    setFetchState((prevFetchState) => ({
+      ...prevFetchState,
+      isLoading: true,
+    }));
 
     let ignore = false;
     let fetchUrl = DEFAULT_FETCH_URL;
@@ -39,12 +49,13 @@ export function useFetch(searchQuery: string, page: number) {
       fetchUrl = `${BASE_URL}/kanji/character/${searchQuery}`;
     }
 
-    async function initReq() {
+    async function fetchItems() {
       try {
         const response = await fetch(`${fetchUrl}?page=${page}`, FETCH_OPTIONS);
         if (response.status === 400) {
           throw new NotFoundError("Not found.");
         }
+
         const data = (await response.json()) as KanjiQueryResult;
         if (!Array.isArray(data.items)) {
           throw new NotFoundError("Not found.");
@@ -53,29 +64,31 @@ export function useFetch(searchQuery: string, page: number) {
         const { items } = data;
 
         if (!ignore) {
-          setData(items);
-          setIsLoading(false);
+          setFetchState((prevFetchState) => ({
+            ...prevFetchState,
+            isLoading: false,
+            data: items,
+          }));
         }
       } catch (error) {
-        if (error instanceof NotFoundError) {
-          setData(null);
-          setIsLoading(false);
-          setHasMore(false);
-        } else {
+        if (!(error instanceof NotFoundError)) {
           console.error(`Failed to fetch data:\n${error}`);
-          setError(true);
-          setIsLoading(false);
-          setHasMore(false);
         }
+        setFetchState({
+          data: null,
+          isLoading: false,
+          hasMorePages: false,
+          error: error as Error,
+        });
       }
     }
 
-    initReq();
+    fetchItems();
 
     return () => {
       ignore = true;
     };
   }, [searchQuery, page]);
 
-  return { data, isLoading, error, hasMore };
+  return fetchState;
 }
