@@ -28,11 +28,11 @@ export function MainLayout({
   const [kanjiItems, setKanjiItems] = useState<KanjiItem[]>([]);
   const { data, error, isLoading, hasMorePages } = useFetch(searchQuery, page);
   const [showOverlay, setShowOverlay] = useState(false);
-  // const [isFilterMenuVisible, setIsFilterMenuVisible] = useState(false);
-  if (searchQuery && data && data.at(-1) !== kanjiItems.at(-1)) {
+  // const [isFilterMenuVisible, setIsFilterMenuVisible] = useState(false );
+  if (searchQuery && data && kanjiItems.at(-1) !== data.at(-1)) {
     setKanjiItems(data);
   } else {
-    if (data && data.at(-1) !== kanjiItems.at(-1)) {
+    if (data && kanjiItems.at(-1) !== data.at(-1)) {
       setKanjiItems([...kanjiItems, ...data]);
     }
   }
@@ -52,14 +52,15 @@ export function MainLayout({
         initialKanjiCollection={initialKanjiCollection}
         initialKanjiIdsMap={initialKanjiIdsMap}
       >
-        {isLoading && <CardsListSceleton />}
-        {!error && !isLoading && (
+        {!error && (
           <>
             <InfiniteScroll
               onNextPage={handleNextPage}
               hasMorePages={hasMorePages}
+              isLoading={isLoading}
             >
               <CardsList kanjiList={kanjiItems} />
+              {isLoading && <CardsListSceleton />}
             </InfiniteScroll>
           </>
         )}
