@@ -18,12 +18,12 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-[![Contributors][contributors-shield]][contributors-url]
+<!-- [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![LinkedIn][linkedin-shield]][linkedin-url] -->
 
 
 
@@ -38,8 +38,6 @@
 
   <p align="center">
     A platform which helps you to learn kanji faster!
-    <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://sea-of-kanji.vercel.app/">View Demo</a>
@@ -69,12 +67,11 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#progress">Progress</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -83,9 +80,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
 
-"Sea of Kanji" is a passionate hobby project aimed at enriching your kanji learning journey. Its core concept is both straightforward and effective: effortlessly search for any specific kanji character you wish to learn and save it to your personalized kanji collection with just one tap.So, it's quick and easy, there's no need for registration or login, ensuring that all essential kanji information is readily accessible at any point of the day. When you're ready to refresh your memory, you can easily revisit your collection to review the kanji you've saved(Thanks to local storage), helping you reinforce your knowledge and recall any characters you may have forgotten.
+"Sea of Kanji" is a passionate hobby project aimed at enriching your kanji learning journey. Its core concept is both straightforward and effective: effortlessly search for any specific kanji character you wish to learn and save it to your personalized kanji collection with just one tap. So, it's quick and easy, there's no need for registration or login, ensuring that all essential kanji information is readily accessible at any point of the day. When you're ready to refresh your memory, you can easily revisit your collection to review the kanji you've saved(Thanks to local storage), helping you reinforce your knowledge and recall any characters you may have forgotten.
 <!-- 
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
  -->
@@ -159,7 +156,7 @@ Some days have been lost because I did not record the progress.
 #### Day 2
 By day 2 I have alread done the basic setup, fetching data, showing it to the user and stuff like that.
 Actually, I got a whole video of me building the project.
- <img src="progress/day2" alt="day 2">
+ <img src="progress/day2.png" alt="day 2">
 
 #### Day 3
 Much better cards. Finally a not yet working search bar and of course, words! Tho to be honest, it was empty at that time.
@@ -230,6 +227,7 @@ Search bar, words, website title, demo filter menu. (Beatiful isn't it?)
     - [ ] JLPT levels
     - [ ] Grade 
 - [ ] Add new kanji collection component.
+- [ ] Add wave-shaped border to website header.
 - [ ] Add some form of quiz
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
