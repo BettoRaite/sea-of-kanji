@@ -1,13 +1,13 @@
 import { useEffect, type ReactNode } from "react";
 type InfiniteScrollProps = {
   children: ReactNode;
-  hasMore: boolean;
+  hasMorePages: boolean;
   onNextPage: () => void;
 };
 export function InfiniteScroll({
   children,
   onNextPage,
-  hasMore,
+  hasMorePages,
 }: InfiniteScrollProps) {
   useEffect(() => {
     const handleScroll = () => {
@@ -20,15 +20,15 @@ export function InfiniteScroll({
       }
     };
 
-    if (hasMore) {
+    if (hasMorePages) {
       window.addEventListener("scroll", handleScroll);
     }
 
     return () => {
-      if (hasMore) {
+      if (hasMorePages) {
         window.removeEventListener("scroll", handleScroll);
       }
     };
-  }, [hasMore, onNextPage]);
+  }, [hasMorePages, onNextPage]);
   return <>{children}</>;
 }

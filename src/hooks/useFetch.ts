@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { NotFoundError } from "../utils/error";
 import type { KanjiQueryResult, KanjiItem } from "kanjibreak-api-types";
+import { apiResponse } from "../schemas/schema";
 
 const RAPID_API_KEY = import.meta.env.VITE_RAPID_API_KEY;
 
@@ -42,7 +43,7 @@ export function useFetch(searchQuery: string, page: number) {
     }));
 
     let ignore = false;
-    let fetchUrl = DEFAULT_FETCH_URL;
+    let fetchUrl = `${DEFAULT_FETCH_URL}?page=${page}`;
 
     if (searchQuery) {
       console.log(searchQuery);
@@ -51,24 +52,48 @@ export function useFetch(searchQuery: string, page: number) {
 
     async function fetchItems() {
       try {
-        const response = await fetch(`${fetchUrl}?page=${page}`, FETCH_OPTIONS);
-        if (response.status === 400) {
-          throw new NotFoundError("Not found.");
-        }
+        const response = await fetch(`${fetchUrl}`, FETCH_OPTIONS);
 
-        const data = (await response.json()) as KanjiQueryResult;
-        if (!Array.isArray(data.items)) {
-          throw new NotFoundError("Not found.");
-        }
+        switch (response.status) {
+          case 400: {
+            throw new NotFoundError("Not found.");
+          }
+          case 200: {
+            const data = (await response.json()) as KanjiQueryResult;
+            apiResponse.parse(data);
+            const { items, metadata = {} } = data;
 
-        const { items } = data;
+            if (!ignore) {
+              setFetchState((prevFetchState) => ({
+                ...prevFetchState,
+                isLoading: false,
+                data: items,
+                hasMorePages: (metadata.pages ?? 0) > 0,
+              }));
+            }
+            break;
+          }
 
-        if (!ignore) {
-          setFetchState((prevFetchState) => ({
-            ...prevFetchState,
-            isLoading: false,
-            data: items,
-          }));
+          default: {
+            const tryParseResData = async () => {
+              try {
+                return await response.json();
+              } catch {
+                console.error("Failed to parse unknown response");
+                return {};
+              }
+            };
+
+            const unknownReponseData = await tryParseResData();
+
+            throw new Error(
+              `Unknown response\nResponse data: ${JSON.stringify(
+                unknownReponseData,
+                null,
+                4
+              )}`
+            );
+          }
         }
       } catch (error) {
         if (!(error instanceof NotFoundError)) {
