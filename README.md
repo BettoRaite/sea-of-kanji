@@ -85,7 +85,10 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
+"Sea of Kanji" is a passionate hobby project aimed at enriching your kanji learning journey. Its core concept is both straightforward and effective: effortlessly search for any specific kanji character you wish to learn and save it to your personalized kanji collection with just one tap.So, it's quick and easy, there's no need for registration or login, ensuring that all essential kanji information is readily accessible at any point of the day. When you're ready to refresh your memory, you can easily revisit your collection to review the kanji you've saved(Thanks to local storage), helping you reinforce your knowledge and recall any characters you may have forgotten.
+<!-- 
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+ -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -116,18 +119,18 @@ First install pnpm if you don't have it.
   ```
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. Get a free API Key at [https://rapidapi.com/BettoRaite/api/kanjibreakapi](https://rapidapi.com/BettoRaite/api/kanjibreakapi)
 2. Clone the repo
    ```sh
    git clone https://github.com/github_username/repo_name.git
    ```
 3. Install NPM packages
    ```sh
-   npm install
+  pnpm install
    ```
-4. Enter your API in `config.js`
+4. Enter your API in `.env`
    ```js
-   const API_KEY = 'ENTER YOUR API';
+   const VITE_RAPID_API_KEY = 'ENTER YOUR API';
    ```
 5. Change git remote url to avoid accidental pushes to base project
    ```sh
@@ -150,9 +153,72 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 
 ## Progress
+Some days have been lost because I did not record the progress.
 
 
+#### Day 2
+By day 2 I have alread done the basic setup, fetching data, showing it to the user and stuff like that.
+Actually, I got a whole video of me building the project.
+ <img src="progress/day2" alt="day 2">
+
+#### Day 3
+Much better cards. Finally a not yet working search bar and of course, words! Tho to be honest, it was empty at that time.
+ <img src="progress/day3.png" alt="day 3">
+
+#### Day 7
+Search bar, words, website title, demo filter menu. (Beatiful isn't it?)
+`Desktop`
+ <img src="progress/day7-2.png" alt="day 7 desktop view">
+`Tablet`
+ <img src="progress/day7-1.png" alt="day 7 tablet view">
+`Tablet scroll`
+ <img src="progress/day7-3.png" alt="day 7 tablet view scroll">
+ `Search bar, mobile`
+ <img src="progress/day7-4.png" alt="day 7 search bar mobile">
 ## Things learned so far
+
+- Infinite scroll. (Not as hard as I imagined.)
+```tsx
+  useEffect(() => {
+    // Handler function for scroll
+    const handleScroll = () => {
+      const { scrollTop, clientHeight, scrollHeight } =
+        document.documentElement;
+      if (scrollTop + clientHeight >= scrollHeight - 1000) {
+        console.log(scrollTop, clientHeight, scrollHeight);
+        /*
+          Calls page handler function
+          job of which is to increase
+          page count, which is going to 
+          be used in fetch url. (query param)
+        */
+        onNextPage();
+      }
+    };
+
+    if (hasMorePages) {
+      /*
+        Avoiding unnessary handler attactment
+      */
+      window.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      /*
+        Once hasMorePages is false, the useEffect
+        cleanUp fn will be run since it's specified
+        as useEffect dependancy, once it's done. useEffect callback will rerun with new hasMorePages set to false.
+      */
+      if (hasMorePages) {
+        window.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, [hasMore, onNextPage]);
+```
+- Loading sceletons, the main idea of which is to show user some data placeholders while fetch process is outgoing. 
+```tsx
+ {isLoading && <CardsListSceleton />}
+```
 
 <!-- ROADMAP -->
 ## Roadmap
@@ -163,6 +229,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [ ] Add filter menu component 
     - [ ] JLPT levels
     - [ ] Grade 
+- [ ] Add new kanji collection component.
+- [ ] Add some form of quiz
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -196,9 +264,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-BettoRaite - [@twitter_handle](https://twitter.com/twitter_handle) - bettoraite@gmail.com
+Email - bettoraite@gmail.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/BettoRaite/sea-of-kanji](https://github.com/BettoRaite/sea-of-kanji)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
