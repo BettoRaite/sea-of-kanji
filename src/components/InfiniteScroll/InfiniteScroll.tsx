@@ -5,6 +5,9 @@ type InfiniteScrollProps = {
   isLoading: boolean;
   onNextPage: () => void;
 };
+
+const INFINITE_SCROOL_ENTRY = 2000;
+
 export function InfiniteScroll({
   children,
   onNextPage,
@@ -16,7 +19,7 @@ export function InfiniteScroll({
       const { scrollTop, clientHeight, scrollHeight } =
         document.documentElement;
 
-      if (scrollTop + clientHeight >= scrollHeight - 1000) {
+      if (scrollTop + clientHeight >= scrollHeight - INFINITE_SCROOL_ENTRY) {
         if (!isLoading) {
           onNextPage();
         }

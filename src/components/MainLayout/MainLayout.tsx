@@ -6,7 +6,6 @@ import type { KanjiCollectionProviderProps } from "../KanjiCollectionProvider/Ka
 import { SearchBar } from "../SearchBar/SearchBar";
 import styles from "./mainLayout.module.css";
 import { NotFound } from "../NotFound/NotFound";
-import { CardsListSceleton } from "../CardsListSceleton/CardsListSceleton";
 import { BottomMenu } from "../BottomMenu/BottomMenu";
 import { KanjiCollectionOverlay } from "../KanjiCollectionOverlay/KanjiCollectionOverlay";
 // import { FilterMenu } from "../FilterMenu/FilterMenu";
@@ -59,8 +58,7 @@ export function MainLayout({
               hasMorePages={hasMorePages}
               isLoading={isLoading}
             >
-              <CardsList kanjiList={kanjiItems} />
-              {isLoading && <CardsListSceleton />}
+              <CardsList kanjiList={kanjiItems} isLoading={isLoading} />
             </InfiniteScroll>
           </>
         )}

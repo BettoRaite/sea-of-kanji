@@ -14,7 +14,7 @@ const FETCH_OPTIONS = {
     "x-rapidapi-host": "kanjibreakapi.p.rapidapi.com",
   },
 };
-const PAGE_SIZE = 100;
+export const PAGE_SIZE = 100;
 
 type FetchState = {
   data: null | KanjiItem[];
