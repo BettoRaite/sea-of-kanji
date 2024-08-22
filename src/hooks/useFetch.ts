@@ -5,8 +5,7 @@ import { apiResponse } from "../schemas/schema";
 
 const RAPID_API_KEY = import.meta.env.VITE_RAPID_API_KEY;
 
-const BASE_URL = "https://kanjibreakapi.p.rapidapi.com";
-const DEFAULT_FETCH_URL = `${BASE_URL}/kanji`;
+const BASE_URL = "https://kanjibreakapi.p.rapidapi.com/kanji";
 const FETCH_OPTIONS = {
   method: "GET",
   headers: {
@@ -15,13 +14,14 @@ const FETCH_OPTIONS = {
   },
 };
 export const PAGE_SIZE = 100;
-
+console.log();
 type FetchState = {
   data: null | KanjiItem[];
   isLoading: boolean;
   error: null | Error;
   hasMorePages: boolean;
 };
+
 export function useFetch(searchQuery: string, page: number) {
   const [fetchState, setFetchState] = useState<FetchState>({
     data: null,
@@ -33,7 +33,7 @@ export function useFetch(searchQuery: string, page: number) {
   useEffect(() => {
     if (typeof RAPID_API_KEY !== "string") {
       console.error(
-        "Rapid api key is required.\nYOu can get the api key through following this link: https://rapidapi.com/BettoRaite/api/kanjibreakapi "
+        "Rapid api key is required.\nYou can get the api key through following this link: https://rapidapi.com/BettoRaite/api/kanjibreakapi "
       );
       return;
     }
@@ -52,10 +52,10 @@ export function useFetch(searchQuery: string, page: number) {
     params.append("pageSize", String(PAGE_SIZE));
     if (page > 1) params.append("offset", "1");
 
-    let fetchUrl = `${DEFAULT_FETCH_URL}?${params.toString()}`;
+    let fetchUrl = `${BASE_URL}?${params.toString()}`;
 
     if (searchQuery) {
-      fetchUrl = `${BASE_URL}/kanji/character/${searchQuery}`;
+      fetchUrl = `${BASE_URL}/character/${searchQuery}`;
     }
 
     async function fetchItems() {

@@ -5,12 +5,20 @@ import collectionsIcon from "/icons/collection.svg";
 
 type BottomMenuProps = {
   onShowOverlay: () => void;
+  onSearchInputFocus: () => void;
 };
-export function BottomMenu({ onShowOverlay }: BottomMenuProps) {
+export function BottomMenu({
+  onShowOverlay,
+  onSearchInputFocus,
+}: BottomMenuProps) {
   return (
     <div className={styles.layout}>
       <div className={styles.buttonsLayout}>
-        <button className={styles.button} type="button">
+        <button
+          className={styles.button}
+          type="button"
+          onClick={onSearchInputFocus}
+        >
           <img src={searchIcon} alt="search kanji" />
         </button>
         <button className={styles.button} type="button" onClick={onShowOverlay}>

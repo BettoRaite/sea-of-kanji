@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { CardsList } from "../CardsList/CardsList";
 import { useFetch } from "../../hooks/useFetch";
 import { KanjiCollectionProvider } from "../KanjiCollectionProvider/KanjiCollectionProvider";
@@ -28,12 +28,14 @@ export function MainLayout({
   const [kanjiItems, setKanjiItems] = useState<KanjiItem[]>([]);
   const { data, error, isLoading, hasMorePages } = useFetch(searchQuery, page);
   const [showOverlay, setShowOverlay] = useState(false);
+
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
   // const [isFilterMenuVisible, setIsFilterMenuVisible] = useState(false );
   if (searchQuery && data && kanjiItems.at(-1) !== data.at(-1)) {
     setKanjiItems(data);
   } else {
     if (data && kanjiItems.at(-1)?.id !== data.at(-1)?.id) {
-      setKanjiItems(kanjiItems.length === 1 ? data : [...kanjiItems, ...data]);
+      setKanjiItems(page === 1 ? data : [...kanjiItems, ...data]);
     }
   }
 
@@ -46,7 +48,7 @@ export function MainLayout({
   }
   return (
     <main className={styles.layout}>
-      <SearchBar onSearch={handleSearch} />
+      <SearchBar onSearch={handleSearch} ref={searchInputRef} />
       {/* <FilterMenu isHidden={!isFilterMenuVisible} /> */}
 
       <KanjiCollectionProvider
@@ -76,6 +78,11 @@ export function MainLayout({
         <BottomMenu
           onShowOverlay={() => {
             setShowOverlay(!showOverlay);
+          }}
+          onSearchInputFocus={() => {
+            if (searchInputRef.current instanceof HTMLInputElement) {
+              searchInputRef.current.focus();
+            }
           }}
         />
       </KanjiCollectionProvider>
