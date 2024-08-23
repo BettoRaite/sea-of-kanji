@@ -123,7 +123,7 @@ First install pnpm if you don't have it.
 1. Get a free API Key at [https://rapidapi.com/BettoRaite/api/kanjibreakapi](kanjibreakapi)
 2. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone git@github.com:BettoRaite/sea-of-kanji.git
    ```
 3. Install NPM packages
    ```sh
