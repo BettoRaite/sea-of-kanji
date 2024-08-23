@@ -129,7 +129,7 @@ First install pnpm if you don't have it.
    ```sh
   pnpm install
    ```
-4. Enter your API in `.env`
+4. Enter your API in `.env`.
    ```js
    const VITE_RAPID_API_KEY = 'ENTER YOUR API';
    ```
