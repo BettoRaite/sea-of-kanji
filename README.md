@@ -120,7 +120,7 @@ First install pnpm if you don't have it.
   ```
 ### Installation
 
-1. Get a free API Key at [https://rapidapi.com/BettoRaite/api/kanjibreakapi](https://rapidapi.com/BettoRaite/api/kanjibreakapi)
+1. Get a free API Key at [https://rapidapi.com/BettoRaite/api/kanjibreakapi](kanjibreakapi)
 2. Clone the repo
    ```sh
    git clone https://github.com/github_username/repo_name.git
@@ -265,36 +265,14 @@ while the current data corresponds to page 1.
     }
   }
 ```
-#### Day1
-The user scrolls 100+ cards deep,
-and the infinite scroll updates the page count, 
-initiating the next fetch cycle. 
-Once the kanji data has been retrieved from the server, 
-it is immediately set to the kanjiItems state.
-The user then clicks the search button without inputting any data. 
-This action is handled by the search handler, which resets the page
-count but does not reset the kanjiItems state.
-After receiving a NotFoundError, the user clicks 
-the search button again, which triggers another fetch for kanji data.
-The problem arises at the point when the kanjiItems 
-state contains previous 200 items(items from page 1-2) and we're
-setting state with data from page 1.  
-The way I check for setting the state is
-by comparing the last element of the newly fetched data with the
-last element of the kanjiItems state.
-These two elements will not be equal because the kanjiItems 
-state contains 200 items (from page 2), 
-while the current data corresponds to page 1. 
 <!-- ROADMAP -->
 ## Roadmap
-
+- [ ] Response caching
 - [ ] Add more advanced search 
     - [ ] Search based on kanji meaning
     - [ ] Search based on kanji words
-- [ ] Add filter menu component 
-    - [ ] JLPT levels
-    - [ ] Grade 
-- [ ] Add new kanji collection component.
+- [+] Add filter menu component 
+- [ ] Filter JLPT, Grade, Frequency.  
 - [ ] Add wave-shaped border to website header.
 - [ ] Add some form of quiz
 
