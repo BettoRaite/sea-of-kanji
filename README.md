@@ -135,7 +135,7 @@ First install pnpm if you don't have it.
    ```
 5. Change git remote url to avoid accidental pushes to base project
    ```sh
-   git remote set-url origin github_username/repo_name
+   git remote set-url origin git@github.com:BettoRaite/sea-of-kanji.git
    git remote -v # confirm the changes
    ```
 
@@ -143,7 +143,8 @@ First install pnpm if you don't have it.
 
 
 
-<!-- USAGE EXAMPLES -->
+<!--
+
 ## Usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
@@ -151,6 +152,9 @@ Use this space to show useful examples of how a project can be used. Additional 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+-->
+
 
 
 ## Progress
