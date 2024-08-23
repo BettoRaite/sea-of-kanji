@@ -13,12 +13,30 @@ import { InfiniteScroll } from "../InfiniteScroll/InfiniteScroll";
 import type { KanjiItem } from "kanjibreak-api-types";
 import { NotFoundError } from "../../utils/error";
 
+const BASE_URL = "https://kanjibreakapi.p.rapidapi.com/kanji";
+function getNextFetchUrl(searchQuery: string, page: number) {
+  const params = new URLSearchParams();
+
+  params.append("page", String(page));
+  params.append("pageSize", String(PAGE_SIZE));
+  if (page > 1) params.append("offset", "1");
+
+  let fetchUrl = `${BASE_URL}?${params.toString()}`;
+
+  if (searchQuery) {
+    fetchUrl = `${BASE_URL}/character/${searchQuery}`;
+  }
+
+  return fetchUrl;
+}
+
+const INITIAL_PAGE = 1;
+export const PAGE_SIZE = 100;
+
 type MainLayoutProps = Pick<
   KanjiCollectionProviderProps,
   "initialKanjiCollection" | "initialKanjiIdsMap"
 >;
-
-const INITIAL_PAGE = 1;
 export function MainLayout({
   initialKanjiCollection,
   initialKanjiIdsMap,
@@ -26,7 +44,9 @@ export function MainLayout({
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(INITIAL_PAGE);
   const [kanjiItems, setKanjiItems] = useState<KanjiItem[]>([]);
-  const { data, error, isLoading, hasMorePages } = useFetch(searchQuery, page);
+  const { data, error, isLoading, hasMorePages } = useFetch(
+    getNextFetchUrl(searchQuery, page)
+  );
   const [showOverlay, setShowOverlay] = useState(false);
 
   const searchInputRef = useRef<HTMLInputElement | null>(null);
@@ -66,7 +86,7 @@ export function MainLayout({
                 kanjiList={
                   !searchQuery && kanjiItems.length === 1 ? [] : kanjiItems
                 }
-                isLoading={isLoading}
+                cardSceletons={isLoading ? PAGE_SIZE : 0}
               />
             </InfiniteScroll>
           </>

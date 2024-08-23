@@ -1,11 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { NotFoundError } from "../utils/error";
 import type { KanjiQueryResult, KanjiItem } from "kanjibreak-api-types";
 import { apiResponse } from "../schemas/schema";
 
-const RAPID_API_KEY = import.meta.env.VITE_RAPID_API_KEY;
+type RequestState = {
+  data: null | KanjiItem[];
+  isLoading: boolean;
+  error: null | Error;
+  hasMorePages: boolean;
+};
 
-const BASE_URL = "https://kanjibreakapi.p.rapidapi.com/kanji";
+const RAPID_API_KEY = import.meta.env.VITE_RAPID_API_KEY;
+if (typeof RAPID_API_KEY !== "string") {
+  throw new Error(
+    "Rapid api key is required.\nYou can get the api key through following this link: https://rapidapi.com/BettoRaite/api/kanjibreakapi "
+  );
+}
 const FETCH_OPTIONS = {
   method: "GET",
   headers: {
@@ -13,103 +23,86 @@ const FETCH_OPTIONS = {
     "x-rapidapi-host": "kanjibreakapi.p.rapidapi.com",
   },
 };
-export const PAGE_SIZE = 100;
-console.log();
-type FetchState = {
-  data: null | KanjiItem[];
-  isLoading: boolean;
-  error: null | Error;
-  hasMorePages: boolean;
-};
+async function fetchItems(fetchUrl: string): Promise<KanjiQueryResult> {
+  const response = await fetch(`${fetchUrl}`, FETCH_OPTIONS);
+  const tryParseResData = async () => {
+    try {
+      return await response.json();
+    } catch {
+      console.error("Failed to parse unknown response");
+      return {};
+    }
+  };
 
-export function useFetch(searchQuery: string, page: number) {
-  const [fetchState, setFetchState] = useState<FetchState>({
+  switch (response.status) {
+    case 400: {
+      throw new NotFoundError("Not found.");
+    }
+    case 200: {
+      const data = (await response.json()) as KanjiQueryResult;
+      apiResponse.parse(data);
+      return data;
+    }
+
+    default: {
+      const unknownReponseData = await tryParseResData();
+
+      throw new Error(
+        `Unknown response\nResponse data: ${JSON.stringify(
+          unknownReponseData,
+          null,
+          4
+        )}`
+      );
+    }
+  }
+}
+
+type ResponseCache = Record<string, KanjiQueryResult | undefined>;
+export function useFetch(fetchUrl: string) {
+  const [requestState, setRequestState] = useState<RequestState>({
     data: null,
     isLoading: true,
     error: null,
     hasMorePages: true,
   });
+  const responseCache = useRef<ResponseCache>({});
 
   useEffect(() => {
-    if (typeof RAPID_API_KEY !== "string") {
-      console.error(
-        "Rapid api key is required.\nYou can get the api key through following this link: https://rapidapi.com/BettoRaite/api/kanjibreakapi "
-      );
-      return;
-    }
-
-    setFetchState((prevFetchState) => ({
-      ...prevFetchState,
+    setRequestState((prev) => ({
+      ...prev,
       data: null,
       isLoading: true,
     }));
 
-    let ignore = false;
+    function setData(data: KanjiQueryResult) {
+      const { items, metadata = {} } = data;
 
-    const params = new URLSearchParams();
-
-    params.append("page", String(page));
-    params.append("pageSize", String(PAGE_SIZE));
-    if (page > 1) params.append("offset", "1");
-
-    let fetchUrl = `${BASE_URL}?${params.toString()}`;
-
-    if (searchQuery) {
-      fetchUrl = `${BASE_URL}/character/${searchQuery}`;
+      setRequestState({
+        error: null,
+        isLoading: false,
+        data: items,
+        hasMorePages: (metadata.pages ?? 0) > 0,
+      });
+      responseCache.current[fetchUrl] = data;
     }
 
-    async function fetchItems() {
+    let ignoreResponse = false;
+
+    async function initReq() {
       try {
-        const response = await fetch(`${fetchUrl}`, FETCH_OPTIONS);
-
-        switch (response.status) {
-          case 400: {
-            throw new NotFoundError("Not found.");
-          }
-          case 200: {
-            const data = (await response.json()) as KanjiQueryResult;
-
-            apiResponse.parse(data);
-
-            const { items, metadata = {} } = data;
-
-            if (!ignore) {
-              setFetchState({
-                error: null,
-                isLoading: false,
-                data: items,
-                hasMorePages: (metadata.pages ?? 0) > 0,
-              });
-            }
-            break;
-          }
-
-          default: {
-            const tryParseResData = async () => {
-              try {
-                return await response.json();
-              } catch {
-                console.error("Failed to parse unknown response");
-                return {};
-              }
-            };
-
-            const unknownReponseData = await tryParseResData();
-
-            throw new Error(
-              `Unknown response\nResponse data: ${JSON.stringify(
-                unknownReponseData,
-                null,
-                4
-              )}`
-            );
-          }
+        let data = responseCache.current[fetchUrl];
+        if (!data) {
+          data = await fetchItems(fetchUrl);
+        }
+        if (!ignoreResponse) {
+          setData(data);
         }
       } catch (error) {
         if (!(error instanceof NotFoundError)) {
           console.error(`Failed to fetch data:\n${error}`);
         }
-        setFetchState({
+        setRequestState({
           data: null,
           isLoading: false,
           hasMorePages: false,
@@ -118,12 +111,12 @@ export function useFetch(searchQuery: string, page: number) {
       }
     }
 
-    fetchItems();
+    initReq();
 
     return () => {
-      ignore = true;
+      ignoreResponse = true;
     };
-  }, [searchQuery, page]);
+  }, [fetchUrl]);
 
-  return fetchState;
+  return requestState;
 }
