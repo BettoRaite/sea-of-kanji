@@ -58,7 +58,7 @@ type RequestState =
   | { status: "success"; data: KanjiEndpointResponse }
   | { status: "error"; error: Error };
 
-export function useFetch(fetchUrl: string) {
+export function useFetch(fetchUrl: string): RequestState {
   const [requestState, setRequestState] = useState<RequestState>({
     status: "idle",
   });
