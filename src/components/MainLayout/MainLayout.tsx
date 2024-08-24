@@ -8,30 +8,16 @@ import styles from "./mainLayout.module.css";
 import { NotFound } from "../NotFound/NotFound";
 import { BottomMenu } from "../BottomMenu/BottomMenu";
 import { KanjiCollectionOverlay } from "../KanjiCollectionOverlay/KanjiCollectionOverlay";
-// import { FilterMenu } from "../FilterMenu/FilterMenu";
+import { FilterMenu } from "../FilterMenu/FilterMenu";
 import { InfiniteScroll } from "../InfiniteScroll/InfiniteScroll";
 import type { KanjiItem } from "kanjibreak-api-types";
 import { NotFoundError } from "../../utils/error";
-
-const BASE_URL = "https://kanjibreakapi.p.rapidapi.com/kanji";
-function getNextFetchUrl(searchQuery: string, page: number) {
-  const params = new URLSearchParams();
-
-  params.append("page", String(page));
-  params.append("pageSize", String(PAGE_SIZE));
-  if (page > 1) params.append("offset", "1");
-
-  let fetchUrl = `${BASE_URL}?${params.toString()}`;
-
-  if (searchQuery) {
-    fetchUrl = `${BASE_URL}/character/${searchQuery}`;
-  }
-
-  return fetchUrl;
-}
-
-const INITIAL_PAGE = 1;
-export const PAGE_SIZE = 100;
+import {
+  fetchItems,
+  INITIAL_PAGE,
+  PAGE_SIZE,
+  getNextFetchUrl,
+} from "../../utils/fetch";
 
 type MainLayoutProps = Pick<
   KanjiCollectionProviderProps,
@@ -44,10 +30,10 @@ export function MainLayout({
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(INITIAL_PAGE);
   const [kanjiItems, setKanjiItems] = useState<KanjiItem[]>([]);
-  const requestState = useFetch(getNextFetchUrl(searchQuery, page));
+  const requestState = useFetch(getNextFetchUrl(searchQuery, page), fetchItems);
   const [showOverlay, setShowOverlay] = useState(false);
   const searchInputRef = useRef<HTMLInputElement | null>(null);
-  // const [isFilterMenuVisible, setIsFilterMenuVisible] = useState(false);
+  const [isFilterMenuVisible, setIsFilterMenuVisible] = useState(false);
 
   if (requestState.status === "success") {
     const { data } = requestState;
@@ -76,11 +62,17 @@ export function MainLayout({
     setPage(INITIAL_PAGE);
     setSearchQuery(searchQuery);
   }
-
+  function handleExpandFilterMenu() {
+    setIsFilterMenuVisible(!isFilterMenuVisible);
+  }
   return (
     <main className={styles.layout}>
-      <SearchBar onSearch={handleSearch} ref={searchInputRef} />
-      {/* <FilterMenu isHidden={!isFilterMenuVisible} /> */}
+      <SearchBar
+        onSearch={handleSearch}
+        onExpandFilterMenu={handleExpandFilterMenu}
+        ref={searchInputRef}
+      />
+      <FilterMenu isHidden={!isFilterMenuVisible} />
 
       <KanjiCollectionProvider
         initialKanjiCollection={initialKanjiCollection}

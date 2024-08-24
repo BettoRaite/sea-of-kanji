@@ -5,7 +5,7 @@
   border-radius: 1rem;
   overflow: hidden;
 
-  transition: height 0.3s;
+  transition: height 0.5s;
 }
 .layoutHidden {
   height: 0;

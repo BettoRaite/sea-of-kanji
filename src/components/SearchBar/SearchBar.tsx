@@ -6,17 +6,18 @@ import { useState } from "react";
 
 type SearchBarProps = {
   onSearch: (searchQuery: string) => void;
+  onExpandFilterMenu: () => void;
 };
 
 export type InputRef = HTMLInputElement;
 
 export const SearchBar = forwardRef<InputRef, SearchBarProps>(
-  ({ onSearch }, inputRef) => {
+  ({ onSearch, onExpandFilterMenu }, inputRef) => {
     const [input, setInput] = useState("");
     function handlerChange(e: ChangeEvent<HTMLInputElement>) {
       setInput(e.target.value);
     }
-    function handleClick() {
+    function handleSearch() {
       onSearch(input);
     }
     function handleKeyDown(e: KeyboardEvent<HTMLInputElement>) {
@@ -26,7 +27,11 @@ export const SearchBar = forwardRef<InputRef, SearchBarProps>(
     }
     return (
       <div className={styles.layout}>
-        <button className={styles.toggleFilterMenuButton} type="button">
+        <button
+          className={styles.toggleFilterMenuButton}
+          type="button"
+          onClick={onExpandFilterMenu}
+        >
           <img src={filterMenuIcon} alt="Expand filter menu" />
         </button>
         <div className={styles.searchBarLayout}>
@@ -44,7 +49,7 @@ export const SearchBar = forwardRef<InputRef, SearchBarProps>(
           <button
             className={styles.searchButton}
             type="button"
-            onClick={handleClick}
+            onClick={handleSearch}
           >
             <img src={searchIcon} alt="Search kanji" />
           </button>
