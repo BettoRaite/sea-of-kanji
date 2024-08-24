@@ -44,19 +44,29 @@ export function MainLayout({
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(INITIAL_PAGE);
   const [kanjiItems, setKanjiItems] = useState<KanjiItem[]>([]);
-  const { data, error, isLoading, hasMorePages } = useFetch(
-    getNextFetchUrl(searchQuery, page)
-  );
+  const requestState = useFetch(getNextFetchUrl(searchQuery, page));
   const [showOverlay, setShowOverlay] = useState(false);
-
   const searchInputRef = useRef<HTMLInputElement | null>(null);
-  // const [isFilterMenuVisible, setIsFilterMenuVisible] = useState(false );
-  if (searchQuery && data && kanjiItems.at(-1) !== data.at(-1)) {
-    setKanjiItems(data);
-  } else {
-    if (data && kanjiItems.at(-1)?.id !== data.at(-1)?.id) {
-      setKanjiItems(page === 1 ? data : [...kanjiItems, ...data]);
+  // const [isFilterMenuVisible, setIsFilterMenuVisible] = useState(false);
+
+  if (requestState.status === "success") {
+    const { data } = requestState;
+    const { items } = data;
+    if (items.at(-1) !== kanjiItems.at(-1)) {
+      setKanjiItems(page === 1 ? items : [...kanjiItems, ...items]);
     }
+  }
+
+  const fetchError =
+    requestState.status === "error" ? requestState.error : null;
+  const hasMorePages =
+    requestState.status === "success"
+      ? Boolean(requestState.data.metadata?.pages)
+      : false;
+
+  let cardsSceletons = 0;
+  if (requestState.status === "loading") {
+    cardsSceletons = searchQuery ? 1 : PAGE_SIZE;
   }
 
   function handleNextPage() {
@@ -66,6 +76,7 @@ export function MainLayout({
     setPage(INITIAL_PAGE);
     setSearchQuery(searchQuery);
   }
+
   return (
     <main className={styles.layout}>
       <SearchBar onSearch={handleSearch} ref={searchInputRef} />
@@ -75,24 +86,23 @@ export function MainLayout({
         initialKanjiCollection={initialKanjiCollection}
         initialKanjiIdsMap={initialKanjiIdsMap}
       >
-        {!error && (
+        {!fetchError && (
           <>
             <InfiniteScroll
               onNextPage={handleNextPage}
               hasMorePages={hasMorePages}
-              isLoading={isLoading}
             >
               <CardsList
                 kanjiList={
                   !searchQuery && kanjiItems.length === 1 ? [] : kanjiItems
                 }
-                cardSceletons={isLoading ? PAGE_SIZE : 0}
+                cardSceletons={cardsSceletons}
               />
             </InfiniteScroll>
           </>
         )}
 
-        {error instanceof NotFoundError && <NotFound />}
+        {fetchError && fetchError instanceof NotFoundError && <NotFound />}
 
         <KanjiCollectionOverlay isHidden={!showOverlay} />
         <BottomMenu

@@ -13,7 +13,7 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.33.0",
-    "kanjibreak-api-types": "^0.0.14",
+    "kanjibreak-api-types": "^0.0.17",
     "postgres": "^3.4.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

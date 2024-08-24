@@ -2,17 +2,15 @@ import { useEffect, type ReactNode } from "react";
 type InfiniteScrollProps = {
   children: ReactNode;
   hasMorePages: boolean;
-  isLoading: boolean;
   onNextPage: () => void;
 };
 
-const INFINITE_SCROOL_ENTRY = 2000;
+const INFINITE_SCROOL_ENTRY = 5000;
 
 export function InfiniteScroll({
   children,
   onNextPage,
   hasMorePages,
-  isLoading,
 }: InfiniteScrollProps) {
   useEffect(() => {
     const handleScroll = () => {
@@ -20,9 +18,7 @@ export function InfiniteScroll({
         document.documentElement;
 
       if (scrollTop + clientHeight >= scrollHeight - INFINITE_SCROOL_ENTRY) {
-        if (!isLoading) {
-          onNextPage();
-        }
+        onNextPage();
       }
     };
 
@@ -35,6 +31,6 @@ export function InfiniteScroll({
         window.removeEventListener("scroll", handleScroll);
       }
     };
-  }, [hasMorePages, onNextPage, isLoading]);
+  }, [hasMorePages, onNextPage]);
   return <>{children}</>;
 }

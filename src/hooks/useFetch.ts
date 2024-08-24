@@ -1,14 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { NotFoundError } from "../utils/error";
-import type { KanjiQueryResult, KanjiItem } from "kanjibreak-api-types";
+import type { KanjiEndpointResponse } from "kanjibreak-api-types";
 import { apiResponse } from "../schemas/schema";
-
-type RequestState = {
-  data: null | KanjiItem[];
-  isLoading: boolean;
-  error: null | Error;
-  hasMorePages: boolean;
-};
 
 const RAPID_API_KEY = import.meta.env.VITE_RAPID_API_KEY;
 if (typeof RAPID_API_KEY !== "string") {
@@ -23,7 +16,7 @@ const FETCH_OPTIONS = {
     "x-rapidapi-host": "kanjibreakapi.p.rapidapi.com",
   },
 };
-async function fetchItems(fetchUrl: string): Promise<KanjiQueryResult> {
+async function fetchItems(fetchUrl: string): Promise<KanjiEndpointResponse> {
   const response = await fetch(`${fetchUrl}`, FETCH_OPTIONS);
   const tryParseResData = async () => {
     try {
@@ -39,7 +32,7 @@ async function fetchItems(fetchUrl: string): Promise<KanjiQueryResult> {
       throw new NotFoundError("Not found.");
     }
     case 200: {
-      const data = (await response.json()) as KanjiQueryResult;
+      const data = (await response.json()) as KanjiEndpointResponse;
       apiResponse.parse(data);
       return data;
     }
@@ -58,31 +51,29 @@ async function fetchItems(fetchUrl: string): Promise<KanjiQueryResult> {
   }
 }
 
-type ResponseCache = Record<string, KanjiQueryResult | undefined>;
+type ResponseCache = Record<string, KanjiEndpointResponse | undefined>;
+type RequestState =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "success"; data: KanjiEndpointResponse }
+  | { status: "error"; error: Error };
+
 export function useFetch(fetchUrl: string) {
   const [requestState, setRequestState] = useState<RequestState>({
-    data: null,
-    isLoading: true,
-    error: null,
-    hasMorePages: true,
+    status: "idle",
   });
+
   const responseCache = useRef<ResponseCache>({});
 
   useEffect(() => {
-    setRequestState((prev) => ({
-      ...prev,
-      data: null,
-      isLoading: true,
+    setRequestState(() => ({
+      status: "loading",
     }));
 
-    function setData(data: KanjiQueryResult) {
-      const { items, metadata = {} } = data;
-
+    function setData(data: KanjiEndpointResponse) {
       setRequestState({
-        error: null,
-        isLoading: false,
-        data: items,
-        hasMorePages: (metadata.pages ?? 0) > 0,
+        status: "success",
+        data,
       });
       responseCache.current[fetchUrl] = data;
     }
@@ -103,9 +94,7 @@ export function useFetch(fetchUrl: string) {
           console.error(`Failed to fetch data:\n${error}`);
         }
         setRequestState({
-          data: null,
-          isLoading: false,
-          hasMorePages: false,
+          status: "error",
           error: error as Error,
         });
       }
