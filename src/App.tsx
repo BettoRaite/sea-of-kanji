@@ -2,7 +2,7 @@ import { MainLayout } from "./components/MainLayout/MainLayout";
 import { loadSavedKanji } from "./utils/local-storage";
 import { Header } from "./components/Header/Header";
 import type { SavedKanjiMap } from "./utils/types";
-
+// iwannary
 function App() {
   const savedKanji = loadSavedKanji();
   const savedKanjiMap: SavedKanjiMap = {};
