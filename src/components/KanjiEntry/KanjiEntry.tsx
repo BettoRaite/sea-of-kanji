@@ -1,10 +1,10 @@
 import type { KanjiItem } from "../../utils/types";
 import { useKanjiCollectionHandler } from "../KanjiCollectionProvider/KanjiCollectionProvider";
 import styles from "./kanjiEntry.module.css";
-import removeIcon from "/icons/remove.svg";
-import moreIcon from "/icons/morevert.svg";
+import { MdMore } from "react-icons/md";
 import { Card } from "../Card/Card";
 import { useState } from "react";
+import { MdRemove } from "react-icons/md";
 
 export type KanjiEntryProps = {
   kanji: KanjiItem;
@@ -34,7 +34,7 @@ export function KanjiEntry({ kanji }: KanjiEntryProps) {
             type="button"
             onClick={handleShowKanjiDetails}
           >
-            <img src={moreIcon} alt="show kanji details" />
+            <MdMore title="show kanji details" />
           </button>
         </div>
 
@@ -43,7 +43,7 @@ export function KanjiEntry({ kanji }: KanjiEntryProps) {
           type="button"
           onClick={handleForget}
         >
-          <img src={removeIcon} alt="remove kanji from collection" />
+          <MdRemove title="remove kanji from collection" />
         </button>
       </div>
       <div

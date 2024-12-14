@@ -1,7 +1,7 @@
 import styles from "./kanjiCollectionOverlay.module.css";
 import { useKanjiCollectionContext } from "../KanjiCollectionProvider/KanjiCollectionProvider";
 import { KanjiEntry } from "../KanjiEntry/KanjiEntry";
-import favoriteIcon from "/icons/favorite-filled.svg";
+import { MdFavorite } from "react-icons/md";
 
 type KanjiCollectionOverlayProps = {
   isHidden: boolean;
@@ -17,7 +17,7 @@ export function KanjiCollectionOverlay({
     >
       <div className={styles.headerWrapper}>
         <h2 className={styles.header}>Your kanji collection</h2>
-        <img src={favoriteIcon} alt="A kanji collection." />
+        <MdFavorite title="kanji collection" />
       </div>
       <div className={styles.entriesLayout}>
         {kanjiCollection?.map((k) => {

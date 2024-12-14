@@ -103,6 +103,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 - Infinite scroll
 - Local storage
 - Basic search
+- Responsive. (works well both on mobile and pc)
 <!-- GETTING STARTED -->
 ## Getting Started
 To get a local copy up and running follow these simple example steps.

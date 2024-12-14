@@ -1,7 +1,8 @@
 import styles from "./bottomMenu.module.css";
-
-import searchIcon from "/icons/search.svg";
 import collectionsIcon from "/icons/collection.svg";
+import { BiSearch } from "react-icons/bi";
+import { MdCollections } from "react-icons/md";
+import Image from "next/image";
 
 type BottomMenuProps = {
   onShowOverlay: () => void;
@@ -19,10 +20,10 @@ export function BottomMenu({
           type="button"
           onClick={onSearchInputFocus}
         >
-          <img src={searchIcon} alt="search kanji" />
+          <BiSearch title="search kanji" />
         </button>
         <button className={styles.button} type="button" onClick={onShowOverlay}>
-          <img src={collectionsIcon} alt="open collections" />
+          <MdCollections title="open collections" />
         </button>
       </div>
     </div>

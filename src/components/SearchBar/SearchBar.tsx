@@ -1,8 +1,8 @@
 import { type ChangeEvent, type KeyboardEvent, forwardRef } from "react";
 import styles from "./searchBar.module.css";
-import searchIcon from "/icons/search.svg";
-import filterMenuIcon from "/icons/filter-menu-open.svg";
 import { useState } from "react";
+import { BiSearch } from "react-icons/bi";
+import { BiFilter } from "react-icons/bi";
 
 type SearchBarProps = {
   onSearch: (searchQuery: string) => void;
@@ -27,7 +27,7 @@ export const SearchBar = forwardRef<InputRef, SearchBarProps>(
     return (
       <div className={styles.layout}>
         <button className={styles.toggleFilterMenuButton} type="button">
-          <img src={filterMenuIcon} alt="Expand filter menu" />
+          <BiFilter title="Expand filter menu" />
         </button>
         <div className={styles.searchBarLayout}>
           <input
@@ -46,10 +46,10 @@ export const SearchBar = forwardRef<InputRef, SearchBarProps>(
             type="button"
             onClick={handleClick}
           >
-            <img src={searchIcon} alt="Search kanji" />
+            <BiSearch title="Search kanji" />
           </button>
         </div>
       </div>
     );
-  }
+  },
 );

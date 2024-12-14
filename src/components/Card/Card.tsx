@@ -1,9 +1,9 @@
 import styles from "./card.module.css";
 import { useKanjiCollectionHandler } from "../KanjiCollectionProvider/KanjiCollectionProvider";
-import favoriteIcon from "/icons/favorite-filled.svg";
+import { MdFavorite } from "react-icons/md";
 import type { KanjiItem } from "../../utils/types";
 import { useKanjiCollectionContext } from "../KanjiCollectionProvider/KanjiCollectionProvider";
-import chevronUpIcon from "/icons/chevron-up.svg";
+import { BiChevronUp } from "react-icons/bi";
 import { useState } from "react";
 
 export type CardProps = {
@@ -25,7 +25,7 @@ function extractKanjiItemWords(kanjiItem: KanjiItem): string[] {
           kana = word?.kana[i];
         }
         wordMeaning.push(
-          `${kanji} ${kana && `(${kana})`} - ${word.meanings.join(", ")}`
+          `${kanji} ${kana && `(${kana})`} - ${word.meanings.join(", ")}`,
         );
         break;
       }
@@ -63,7 +63,7 @@ export function Card({ kanjiItem }: CardProps) {
           type="button"
           onClick={isSaved ? handleForget : handleSave}
         >
-          <img src={favoriteIcon} alt="save kanji" />
+          <MdFavorite title="add kanji to collection" />
         </button>
       )}
 
@@ -107,7 +107,7 @@ export function Card({ kanjiItem }: CardProps) {
               padding: "1rem",
             }}
           >
-            <img src={chevronUpIcon} alt="expand section" />
+            <BiChevronUp title="expand section" />
             Meanings
           </h4>
         </button>
@@ -137,7 +137,7 @@ export function Card({ kanjiItem }: CardProps) {
               expandedContent === "words" && styles.sectionHeaderExpanded
             }`}
           >
-            <img src={chevronUpIcon} alt="expand section" />
+            <BiChevronUp title="expand section" />
             Words
           </h4>
         </button>
@@ -167,7 +167,7 @@ export function Card({ kanjiItem }: CardProps) {
               expandedContent === "miscs" && styles.sectionHeaderExpanded
             }`}
           >
-            <img src={chevronUpIcon} alt="expand section" />
+            <BiChevronUp title="expand section" />
             Miscs
           </h4>
         </button>

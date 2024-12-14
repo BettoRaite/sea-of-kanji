@@ -3,7 +3,7 @@ import { NotFoundError } from "../utils/error";
 import type { KanjiQueryResult, KanjiItem } from "kanjibreak-api-types";
 import { apiResponse } from "../schemas/schema";
 
-const RAPID_API_KEY = import.meta.env.VITE_RAPID_API_KEY;
+const RAPID_API_KEY = process.env.NEXT_PUBLIC_RAPID_API_KEY;
 
 const BASE_URL = "https://kanjibreakapi.p.rapidapi.com/kanji";
 const FETCH_OPTIONS = {
@@ -33,7 +33,7 @@ export function useFetch(searchQuery: string, page: number) {
   useEffect(() => {
     if (typeof RAPID_API_KEY !== "string") {
       console.error(
-        "Rapid api key is required.\nYou can get the api key through following this link: https://rapidapi.com/BettoRaite/api/kanjibreakapi "
+        "Rapid api key is required.\nYou can get the api key through following this link: https://rapidapi.com/BettoRaite/api/kanjibreakapi ",
       );
       return;
     }
@@ -100,8 +100,8 @@ export function useFetch(searchQuery: string, page: number) {
               `Unknown response\nResponse data: ${JSON.stringify(
                 unknownReponseData,
                 null,
-                4
-              )}`
+                4,
+              )}`,
             );
           }
         }
