@@ -1,23 +1,23 @@
 .layout {
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  bottom: 10px;
-  left: 0;
-  right: 0;
-  z-index: 2;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    z-index: 2;
 }
 .buttonsLayout {
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
-  border-radius: 10px;
-  gap: 2rem;
-  background-color: var(--soft-blue);
-  border: 1px solid gainsboro;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    border-radius: 10px;
+    gap: 2rem;
+    background-color: var(--soft-blue);
+    border: 1px solid gainsboro;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 .button {
-  display: flex;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
 }
